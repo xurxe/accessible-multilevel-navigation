@@ -1,0 +1,10 @@
+node_modules
+.idea
+.env
+.DS_Store
+ansible
+conf/*.retry
+.virtualenv
+secrets
+*.log
+storybook-static

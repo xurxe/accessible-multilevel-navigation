@@ -1,0 +1,42 @@
+{
+  "name": "accessible-multilevel-nav",
+  "version": "1.0.0",
+  "description": "Practical example on how to build accessible multilevel navigation menus",
+  "author": "Xurxe Toivo García <xurxe.garcia@wunder.io>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "start-storybook -p 6006",
+    "test": "echo Not implemented",
+    "build": "build-storybook"
+  },
+  "dependencies": {
+    "core-js": "^3.4.1",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "polished": "^3.4.1",
+    "prettier": "^1.19.1",
+    "prop-types": "^15.7.2",
+    "react": "16.10.2",
+    "react-dom": "16.10.2",
+    "regenerator-runtime": "^0.13.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-export-default-from": "^7.5.2",
+    "@babel/preset-env": "^7.7.4",
+    "@storybook/addon-a11y": "^5.2.6",
+    "@storybook/addon-actions": "^5.2.6",
+    "@storybook/addon-links": "^5.2.6",
+    "@storybook/addon-notes": "^5.2.6",
+    "@storybook/addon-viewport": "^5.2.6",
+    "@storybook/addons": "^5.2.6",
+    "@storybook/react": "^5.2.6",
+    "@storybook/source-loader": "^5.2.6",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-macros": "^2.6.1",
+    "react-svg-loader": "^3.0.3",
+    "react-syntax-highlighter": "^11.0.2"
+  }
+}
