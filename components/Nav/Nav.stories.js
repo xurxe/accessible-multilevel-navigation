@@ -11,8 +11,14 @@ export default {
   },
 };
 
-export const example = () => (
+export const none = () => (
   <>
     <Nav data={data} />
+  </>
+);
+
+export const horizontal = () => (
+  <>
+    <Nav data={data} style="horizontal" />
   </>
 );

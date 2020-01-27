@@ -1,0 +1,18 @@
+:root {
+  --purple: #5b37bf;
+  --pink: #9e005d;
+  --dark: #2f2942;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--dark);
+  font-family: 'Overpass', sans-serif;
+  font-size: 20px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

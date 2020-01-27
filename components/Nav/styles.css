@@ -1,0 +1,13 @@
+.Nav {
+  background-color: var(--purple);
+  padding: 1.5em;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.Nav___horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

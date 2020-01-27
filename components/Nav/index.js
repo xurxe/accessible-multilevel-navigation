@@ -1,9 +1,11 @@
 import React from 'react';
 import NavLevel from '../NavLevel';
+import '../global.css';
+import './styles.css';
 
-const Nav = ({ data }) => (
-  <nav>
-    <NavLevel data={data} level={0} />
+const Nav = ({ data, style }) => (
+  <nav className={style ? `Nav Nav___${style}` : ''}>
+    <NavLevel data={data} level={0} style={style} />
   </nav>
 );
 
