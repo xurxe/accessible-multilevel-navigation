@@ -1,5 +1,6 @@
 import React from 'react';
 import Nav from '.';
+import data from '../../data/nav';
 
 export default {
   title: 'Nav',
@@ -10,8 +11,8 @@ export default {
   },
 };
 
-export const welcome = () => (
+export const example = () => (
   <>
-    <Nav></Nav>
+    <Nav data={data} />
   </>
 );
