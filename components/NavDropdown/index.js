@@ -4,7 +4,7 @@ import NavLink from '../NavLink';
 import '../global.css';
 import './styles.css';
 
-const NavDropdown = ({ data, style, level }) => {
+const NavDropdown = ({ data, layout, level }) => {
   const [expanded, setExpanded] = useState(false);
   const handleClick = () => {
     setExpanded(!expanded);
@@ -13,23 +13,25 @@ const NavDropdown = ({ data, style, level }) => {
   return (
     <div
       className={
-        style ? `NavDropdown NavDropdown___${level} NavDropdown___${style}` : ''
+        layout
+          ? `NavDropdown NavDropdown___${level} NavDropdown___${layout}`
+          : ''
       }
     >
       <div
         className={
-          style ? `NavDropdown_control NavDropdown_control___${style}` : ''
+          layout ? `NavDropdown_control NavDropdown_control___${layout}` : ''
         }
       >
-        <NavLink data={data} style={style} />
+        <NavLink data={data} layout={layout} />
         <button
           type="button"
           onClick={handleClick}
           aria-pressed={expanded}
           aria-label={expanded ? `Collapse` : `Expand`}
           className={
-            style
-              ? `hvr-reveal NavDropdown_button NavDropdown_button___${style} ${
+            layout
+              ? `hvr-reveal NavDropdown_button NavDropdown_button___${layout} ${
                   expanded
                     ? 'NavDropdown_button___expanded'
                     : 'NavDropdown_button___collapsed'
@@ -39,8 +41,8 @@ const NavDropdown = ({ data, style, level }) => {
         >
           <i
             className={
-              style
-                ? `NavDropdown_icon NavDropdown_icon___${style} ${
+              layout
+                ? `NavDropdown_icon NavDropdown_icon___${layout} ${
                     expanded
                       ? 'NavDropdown_icon___expanded fas fa-chevron-up'
                       : 'NavDropdown_icon___collapsed fas fa-chevron-down'
@@ -53,7 +55,7 @@ const NavDropdown = ({ data, style, level }) => {
       </div>
 
       {expanded ? (
-        <NavLevel data={data.children} style={style} level={level + 1} />
+        <NavLevel data={data.children} layout={layout} level={level + 1} />
       ) : null}
     </div>
   );

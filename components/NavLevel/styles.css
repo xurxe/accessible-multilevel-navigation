@@ -1,22 +1,32 @@
 .NavLevel {
   display: flex;
-  flex-direction: column;
   margin: 0;
   padding: 0;
+  background-color: var(--pink);
 }
 
-.NavLevel___0.NavLevel___horizontal {
-  display: flex;
+.NavLevel___wide {
   flex-direction: row;
-  justify-content: space-around;
+  width: 100%;
+  position: absolute;
+  bottom: -3em;
+  padding: 1em 1.5em;
 }
 
-.NavLevel_li {
+.NavLevel___tall {
+  flex-direction: column;
+  height: 100%;
+}
+
+.NavLevel___0 {
+  position: static;
+  background-color: var(--purple);
+}
+
+.NavLevel_item {
   list-style: none;
-  display: inline-block;
-  padding: 0.5em 1em;
 }
 
-.NavLevel_li___0.NavLevel_li___horizontal {
-  padding: 0;
+.NavLevel_item___wide {
+  padding-right: 1em;
 }

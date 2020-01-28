@@ -1,7 +1,12 @@
 .Nav {
-  background-color: var(--purple);
-  padding: 1em;
   position: fixed;
-  width: 100%;
   z-index: 100;
+}
+
+.Nav___wide {
+  min-width: 100vw;
+}
+
+.Nav___tall {
+  min-height: 100vh;
 }

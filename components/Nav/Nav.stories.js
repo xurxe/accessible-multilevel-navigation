@@ -17,8 +17,14 @@ export const none = () => (
   </>
 );
 
-export const horizontal = () => (
+export const wide = () => (
   <>
-    <Nav data={data} style="horizontal" />
+    <Nav data={data} layout="wide" />
+  </>
+);
+
+export const tall = () => (
+  <>
+    <Nav data={data} layout="tall" />
   </>
 );

@@ -2,11 +2,11 @@ import React from 'react';
 import '../global.css';
 import './styles.css';
 
-const NavLink = ({ data, style }) => (
+const NavLink = ({ data, layout }) => (
   <a
     href={`https://example.com/${data.slug}`}
     className={
-      style ? `NavLink NavLink___${style} hvr-underline-from-center` : ''
+      layout ? `NavLink NavLink___${layout} hvr-underline-from-center` : ''
     }
   >
     {data.text}

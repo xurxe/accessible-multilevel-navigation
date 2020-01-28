@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import '../global.css';
 import './styles.css';
 
-const NavLevel = ({ data, style, level }) => (
+const NavLevel = ({ data, layout, level }) => (
   <ul
     role={level == 0 ? 'tree' : 'group'}
-    className={style ? `NavLevel NavLevel___${level} NavLevel___${style}` : ''}
+    className={
+      layout ? `NavLevel NavLevel___${level} NavLevel___${layout}` : ''
+    }
   >
     {data.map(item => (
       <>
@@ -15,23 +17,23 @@ const NavLevel = ({ data, style, level }) => (
           <li
             role="treeitem"
             className={
-              style
-                ? `NavLevel_li NavLevel_li___${level} NavLevel_li___${style}`
+              layout
+                ? `NavLevel_item NavLevel_item___${level} NavLevel_item___${layout}`
                 : ''
             }
           >
-            <NavDropdown data={item} style={style} level={level} />
+            <NavDropdown data={item} layout={layout} level={level} />
           </li>
         ) : (
           <li
             role="none"
             className={
-              style
-                ? `NavLevel_li NavLevel_li___${level} NavLevel_li___${style}`
+              layout
+                ? `NavLevel_item NavLevel_item___${level} NavLevel_item___${layout}`
                 : ''
             }
           >
-            <NavLink data={item} style={style} />
+            <NavLink data={item} layout={layout} />
           </li>
         )}
       </>

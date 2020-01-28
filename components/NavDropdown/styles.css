@@ -1,18 +1,3 @@
-.NavDropdown_control {
-  display: flex;
-}
-
-.NavDropdown___0.NavDropdown___horizontal {
-  position: relative;
-}
-
-.NavLevel___1.NavLevel___horizontal {
-  position: absolute;
-  background-color: var(--pink);
-  top: 2rem;
-  z-index: -1;
-}
-
 .NavDropdown_button {
   margin-left: 0.2em;
   padding: 0.1em;
@@ -78,7 +63,7 @@
 }
 
 .NavDropdown_button___expanded.hvr-reveal:before {
-  border-color: var(--purple);
+  border-color: var(--lightPurple);
 }
 
 .hvr-reveal:hover:before,
