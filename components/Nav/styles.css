@@ -9,4 +9,18 @@
 
 .Nav___tall {
   min-height: 100vh;
+  min-width: 50vw;
+  overflow-y: scroll;
+}
+
+.Nav___tall::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.Nav___tall::-webkit-scrollbar-track {
+  background: var(--lightPurple);
+}
+
+.Nav___tall::-webkit-scrollbar-thumb {
+  background: var(--pink);
 }

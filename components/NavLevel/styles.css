@@ -2,6 +2,17 @@
   display: flex;
   margin: 0;
   padding: 0;
+}
+
+.NavLevel___0,
+.NavLevel___2,
+.NavLevel___4 {
+  background-color: var(--purple);
+}
+
+.NavLevel___1,
+.NavLevel___3,
+.NavLevel___5 {
   background-color: var(--pink);
 }
 
@@ -16,11 +27,23 @@
 .NavLevel___tall {
   flex-direction: column;
   height: 100%;
+  padding: 0.5em 1em;
+  margin-top: 0.5em;
 }
 
 .NavLevel___0 {
   position: static;
-  background-color: var(--purple);
+  margin-top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.NavLevel___0.NavLevel___wide {
+  min-width: 100vw;
+}
+
+.NavLevel___0.NavLevel___tall {
+  min-height: 100vh;
 }
 
 .NavLevel_item {
@@ -29,4 +52,8 @@
 
 .NavLevel_item___wide {
   padding-right: 1em;
+}
+
+.NavLevel_item___tall {
+  padding-bottom: 0.5em;
 }

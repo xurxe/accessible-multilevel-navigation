@@ -28,7 +28,9 @@ const NavDropdown = ({ data, layout, level }) => {
           type="button"
           onClick={handleClick}
           aria-pressed={expanded}
-          aria-label={expanded ? `Collapse` : `Expand`}
+          aria-label={
+            expanded ? `Collapse ${data.text}` : `Expand ${data.text}`
+          }
           className={
             layout
               ? `hvr-reveal NavDropdown_button NavDropdown_button___${layout} ${
