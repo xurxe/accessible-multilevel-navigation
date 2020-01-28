@@ -1,14 +1,17 @@
 .Nav {
   position: fixed;
   z-index: 100;
+  background-color: var(--purple);
 }
 
 .Nav___wide {
-  min-width: 100vw;
+  left: 0;
+  right: 0;
 }
 
 .Nav___tall {
-  min-height: 100vh;
+  top: 0;
+  bottom: 0;
   min-width: 50vw;
   overflow-y: scroll;
 }
@@ -18,9 +21,9 @@
 }
 
 .Nav___tall::-webkit-scrollbar-track {
-  background: var(--lightPurple);
+  background: var(--purple);
 }
 
 .Nav___tall::-webkit-scrollbar-thumb {
-  background: var(--pink);
+  background: var(--lightPurple);
 }

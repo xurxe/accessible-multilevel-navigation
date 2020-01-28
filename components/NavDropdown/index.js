@@ -4,10 +4,13 @@ import NavLink from '../NavLink';
 import '../global.css';
 import './styles.css';
 
-const NavDropdown = ({ data, layout, level }) => {
+const NavDropdown = ({ data, layout, level, levelRef }) => {
   const [expanded, setExpanded] = useState(false);
+  const [levelHeight, setLevelHeight] = useState(0);
+
   const handleClick = () => {
     setExpanded(!expanded);
+    setLevelHeight(levelRef.current.offsetHeight);
   };
 
   return (
@@ -18,6 +21,7 @@ const NavDropdown = ({ data, layout, level }) => {
           : ''
       }
     >
+      {console.log(levelHeight)}
       <div
         className={
           layout ? `NavDropdown_control NavDropdown_control___${layout}` : ''
@@ -57,7 +61,12 @@ const NavDropdown = ({ data, layout, level }) => {
       </div>
 
       {expanded ? (
-        <NavLevel data={data.children} layout={layout} level={level + 1} />
+        <NavLevel
+          data={data.children}
+          layout={layout}
+          level={level + 1}
+          levelHeight={levelHeight}
+        />
       ) : null}
     </div>
   );
