@@ -14,9 +14,21 @@ export default {
 export const none = () => <Nav data={data} />;
 
 export const wide = () => (
-  <Nav data={data} layout="wide" color="white" animated={true} />
+  <Nav
+    data={data}
+    layout="wide"
+    color="white"
+    background="var(--purple)"
+    animated={true}
+  />
 );
 
 export const tall = () => (
-  <Nav data={data} layout="tall" color="white" animated={false} />
+  <Nav
+    data={data}
+    layout="tall"
+    color="white"
+    background="var(--purple)"
+    animated={false}
+  />
 );

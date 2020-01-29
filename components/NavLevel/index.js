@@ -4,7 +4,15 @@ import NavLink from '../NavLink';
 import '../global.css';
 import './styles.css';
 
-const NavLevel = ({ data, layout, color, animated, level, levelHeight }) => {
+const NavLevel = ({
+  data,
+  layout,
+  color,
+  background,
+  animated,
+  level,
+  levelHeight,
+}) => {
   const levelRef = useRef(null);
 
   return (
@@ -35,6 +43,7 @@ const NavLevel = ({ data, layout, color, animated, level, levelHeight }) => {
               data={item}
               layout={layout}
               color={color}
+              background={background}
               animated={animated}
               level={level}
               levelRef={levelRef}
