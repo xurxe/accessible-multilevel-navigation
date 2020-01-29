@@ -3,16 +3,9 @@ import NavLevel from '../NavLevel';
 import '../global.css';
 import './styles.css';
 
-const Nav = ({ data, layout, color, background, animated }) => (
+const Nav = ({ data, layout, theme }) => (
   <nav className={layout ? `Nav Nav___${layout}` : ''}>
-    <NavLevel
-      data={data}
-      layout={layout}
-      color={color}
-      background={background}
-      animated={animated}
-      level={0}
-    />
+    <NavLevel data={data} layout={layout} theme={theme} level={0} />
   </nav>
 );
 

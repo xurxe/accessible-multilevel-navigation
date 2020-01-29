@@ -1,19 +1,21 @@
 import React from 'react';
 import '../global.css';
-import './styles.css';
 import styled, { css } from 'styled-components';
 
-const Styled = styled.a`
-  ${({ color }) =>
-    color &&
+const StyledA = styled.a`
+  ${({ theme, level }) =>
+    theme &&
+    theme.color &&
     css`
-      color: ${color};
+      color: ${theme.color[level % theme.color.length]};
       text-decoration: none;
     `}
 
   ${/* To do: make this work for all light text on dark background */ ''}
-  ${({ color }) =>
-    color == 'white' &&
+  ${({ theme, level }) =>
+    theme &&
+    theme.color &&
+    theme.color[level % theme.color.length] == 'white' &&
     css`
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
@@ -21,10 +23,10 @@ const Styled = styled.a`
       -moz-osx-font-smoothing: grayscale;
       -o-font-smoothing: antialiased;
     `}
-    
   ${/* Adapted from hover.css */ ''}
-  ${({ animated, color }) =>
-    animated &&
+  ${({ theme, level }) =>
+    theme &&
+    theme.animated &&
     css`
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
@@ -33,7 +35,7 @@ const Styled = styled.a`
       padding-bottom: 0.2em;
 
       &:focus {
-        outline: none;
+        outline: solid transparent;
       }
 
       &:before {
@@ -43,29 +45,31 @@ const Styled = styled.a`
         left: 51%;
         right: 51%;
         bottom: 0;
-        background: ${color ? color : 'white'};
+        background: ${theme.color
+          ? theme.color[level % theme.color.length]
+          : 'white'};
         height: 2px;
         transition-property: left, right;
         transition-duration: 0.3s;
         transition-timing-function: ease-out;
       }
 
-      &:hover:before {
+      &:hover:before,
+      &:focus:before {
         left: 0;
         right: 0;
       }
     `}
-
 `;
 
-const NavLink = ({ data, color, animated }) => (
-  <Styled
+const NavLink = ({ data, theme, level }) => (
+  <StyledA
     href={`https://example.com/${data.slug}`}
-    color={color}
-    animated={animated}
+    theme={theme}
+    level={level}
   >
     {data.text}
-  </Styled>
+  </StyledA>
 );
 
 export default NavLink;

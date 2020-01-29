@@ -37,6 +37,7 @@
     "@storybook/source-loader": "^5.2.6",
     "babel-loader": "^8.0.6",
     "babel-plugin-macros": "^2.6.1",
+    "babel-plugin-styled-components": "^1.10.7",
     "react-svg-loader": "^3.0.3",
     "react-syntax-highlighter": "^11.0.2"
   }

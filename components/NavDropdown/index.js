@@ -5,8 +5,8 @@ import '../global.css';
 import styled, { css } from 'styled-components';
 
 const StyledButton = styled.button`
-  ${({ layout }) =>
-    layout &&
+  ${({ theme }) =>
+    theme &&
     css`
       margin-left: 0.2em;
       height: 1.2em;
@@ -14,18 +14,22 @@ const StyledButton = styled.button`
       border: none;
     `}
 
-  ${({ pressed, color, background }) =>
-    pressed == false
+  ${({ pressed, theme, level }) =>
+    pressed === false
       ? css`
-          background-color: ${background};
+          background-color: ${theme &&
+            theme.background &&
+            theme.background[level % theme.background.length]};
         `
       : css`
-          background-color: ${color};
+          background-color: ${theme &&
+            theme.color &&
+            theme.color[level % theme.color.length]};
         `}
 
   ${/* Adapted from hover.css */ ''}
-  ${({ animated, pressed, color, background }) =>
-    animated &&
+  ${({ pressed, theme, level }) =>
+    theme.animated &&
     css`
       display: inline-block;
       vertical-align: middle;
@@ -35,7 +39,7 @@ const StyledButton = styled.button`
       overflow: hidden;
 
       &:focus {
-        outline: none;
+        outline: solid transparent;
       }
 
       &:before {
@@ -51,10 +55,13 @@ const StyledButton = styled.button`
         transition-property: border-width;
         transition-duration: 0.1s;
         transition-timing-function: ease-out;
-        border-color: ${pressed ? color : background};
+        border-color: ${pressed && theme.accent && theme.color
+          ? theme.accent[level % theme.accent.length]
+          : theme.color[level % theme.color.length]};
       }
 
-      &:hover:before {
+      &:hover:before,
+      &:focus:before {
         transform: translateY(0);
         border-width: 2px;
       }
@@ -62,33 +69,28 @@ const StyledButton = styled.button`
   
 `;
 
-const StyledIcon = styled.i`
-  ${({ layout }) =>
-    layout &&
+const StyledI = styled.i`
+  ${({ theme }) =>
+    theme &&
     css`
       font-size: 0.5em;
       display: block;
     `}
 
-  ${({ pressed, color, background }) =>
-    pressed == false
+  ${({ pressed, theme, level }) =>
+    theme &&
+    theme.color &&
+    theme.background &&
+    (pressed == false
       ? css`
-          color: ${color};
+          color: ${theme.color[level % theme.color.length]}};
         `
       : css`
-          color: ${background};
-        `}
+          color: ${theme.background[level % theme.background.length]};
+        `)}
 `;
 
-const NavDropdown = ({
-  data,
-  layout,
-  color,
-  background,
-  animated,
-  level,
-  levelRef,
-}) => {
+const NavDropdown = ({ data, layout, theme, level, levelRef }) => {
   const [pressed, setPressed] = useState(false);
   const [levelHeight, setLevelHeight] = useState(0);
   const handleClick = () => {
@@ -99,31 +101,23 @@ const NavDropdown = ({
   return (
     <div>
       <div>
-        <NavLink
-          data={data}
-          layout={layout}
-          color={color}
-          animated={animated}
-        />
+        <NavLink data={data} layout={layout} theme={theme} level={level} />
         <StyledButton
           type="button"
           onClick={handleClick}
           aria-pressed={pressed}
-          pressed={pressed}
           aria-label={pressed ? `Collapse ${data.text}` : `Expand ${data.text}`}
-          color={color}
-          background={background}
-          animated={animated}
-          layout={layout}
+          pressed={pressed}
+          theme={theme}
+          level={level}
         >
-          <StyledIcon
+          <StyledI
             className={pressed ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
             pressed={pressed}
-            color={color}
-            background={background}
             aria-hidden
-            layout={layout}
-          ></StyledIcon>
+            theme={theme}
+            level={level}
+          ></StyledI>
         </StyledButton>
       </div>
 
@@ -131,9 +125,7 @@ const NavDropdown = ({
         <NavLevel
           data={data.children}
           layout={layout}
-          color={color}
-          background={background}
-          animated={animated}
+          theme={theme}
           level={level + 1}
           levelHeight={levelHeight}
         />
