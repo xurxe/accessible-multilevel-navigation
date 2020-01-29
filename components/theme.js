@@ -37,8 +37,8 @@ export const theme1 = {
 };
 
 export const theme2 = {
-  color: [brand.martinique, brand.martinique],
-  background: [brand.fog, brand.paleRose],
-  accent: [brand.purpleHeart, brand.purpleHugs],
+  color: ['white'],
+  background: [brand.purpleHugs, brand.scarpaFlow, brand.stone],
+  accent: [brand.paleRose],
   animated: false,
 };

@@ -66,7 +66,6 @@ const StyledButton = styled.button`
         border-width: 2px;
       }
     `}
-  
 `;
 
 const StyledI = styled.i`
