@@ -4,7 +4,7 @@ import NavLink from '../NavLink';
 import '../global.css';
 import './styles.css';
 
-const NavLevel = ({ data, layout, level, levelHeight }) => {
+const NavLevel = ({ data, layout, color, animated, level, levelHeight }) => {
   const levelRef = useRef(null);
 
   return (
@@ -34,11 +34,18 @@ const NavLevel = ({ data, layout, level, levelHeight }) => {
             <NavDropdown
               data={item}
               layout={layout}
+              color={color}
+              animated={animated}
               level={level}
               levelRef={levelRef}
             />
           ) : (
-            <NavLink data={item} layout={layout} />
+            <NavLink
+              data={item}
+              layout={layout}
+              color={color}
+              animated={animated}
+            />
           )}
         </li>
       ))}

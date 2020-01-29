@@ -11,20 +11,12 @@ export default {
   },
 };
 
-export const none = () => (
-  <>
-    <Nav data={data} />
-  </>
-);
+export const none = () => <Nav data={data} />;
 
 export const wide = () => (
-  <>
-    <Nav data={data} layout="wide" />
-  </>
+  <Nav data={data} layout="wide" color="white" animated={true} />
 );
 
 export const tall = () => (
-  <>
-    <Nav data={data} layout="tall" />
-  </>
+  <Nav data={data} layout="tall" color="white" animated={false} />
 );
