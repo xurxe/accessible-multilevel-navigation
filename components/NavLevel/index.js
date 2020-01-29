@@ -27,7 +27,7 @@ const StyledUl = styled.ul`
     `}
 
 
-  ${({ layout, levelHeight }) =>
+  ${({ layout, prevLevelHeight }) =>
     layout &&
     layout == 'wide' &&
     css`
@@ -35,7 +35,7 @@ const StyledUl = styled.ul`
       flex-wrap: wrap;
       position: absolute;
       right: 0;
-      top: ${levelHeight ? `${levelHeight - 2}px` : '3.5em'};
+      top: ${prevLevelHeight ? `${prevLevelHeight - 2}px` : '3.5em'};
       left: 0;
       padding: 1em 1.5em;
     `}
@@ -61,7 +61,7 @@ const StyledLi = styled.li`
     `}
 `;
 
-const NavLevel = ({ data, layout, theme, level, levelHeight }) => {
+const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
   const levelRef = useRef(null);
 
   return (
@@ -70,7 +70,7 @@ const NavLevel = ({ data, layout, theme, level, levelHeight }) => {
       ref={levelRef}
       theme={theme}
       level={level}
-      levelHeight={levelHeight}
+      prevLevelHeight={prevLevelHeight}
       layout={layout}
     >
       {data.map(item => (

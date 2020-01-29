@@ -15,21 +15,47 @@ const StyledButton = styled.button`
     `}
 
   ${({ pressed, theme, level }) =>
-    pressed === false
+    theme &&
+    theme.color &&
+    theme.background &&
+    (pressed === false
       ? css`
-          background-color: ${theme &&
-            theme.background &&
-            theme.background[level % theme.background.length]};
+          background-color: ${theme.background[
+            level % theme.background.length
+          ]};
         `
       : css`
-          background-color: ${theme &&
-            theme.color &&
-            theme.color[level % theme.color.length]};
-        `}
+          background-color: ${theme.color[level % theme.color.length]};
+        `)}
 
+  ${({ theme }) =>
+    theme &&
+    theme.animated &&
+    css`
+      transition-property: background-color;
+      transition-duration: 0.5s;
+      transition-timing-function: ease-out;
+    `}
+
+  ${({ theme, level }) =>
+    theme &&
+    !theme.animated &&
+    theme.color &&
+    theme.background &&
+    css`
+      border: 2px solid
+        ${theme.background && theme.background[level % theme.background.length]};
+      &:hover {
+        border: 2px solid
+          ${theme.color && theme.color[level % theme.color.length]};
+      }
+    `}
+        
   ${/* Adapted from hover.css */ ''}
   ${({ pressed, theme, level }) =>
     theme.animated &&
+    theme.accent &&
+    theme.color &&
     css`
       display: inline-block;
       vertical-align: middle;
@@ -126,7 +152,7 @@ const NavDropdown = ({ data, layout, theme, level, levelRef }) => {
           layout={layout}
           theme={theme}
           level={level + 1}
-          levelHeight={levelHeight}
+          prevLevelHeight={levelHeight}
         />
       ) : null}
     </div>

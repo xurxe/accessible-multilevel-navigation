@@ -33,9 +33,9 @@ const StyledNav = styled.nav`
 
     ${({ theme, layout }) =>
       theme &&
+      layout == 'tall' &&
       theme.background &&
       theme.accent &&
-      layout == 'tall' &&
       css`
         &::-webkit-scrollbar {
           width: 0.25rem;

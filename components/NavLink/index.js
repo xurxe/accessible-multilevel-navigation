@@ -8,7 +8,6 @@ const StyledA = styled.a`
     theme.color &&
     css`
       color: ${theme.color[level % theme.color.length]};
-      text-decoration: none;
     `}
 
   ${/* To do: make this work for all light text on dark background */ ''}
@@ -23,16 +22,28 @@ const StyledA = styled.a`
       -moz-osx-font-smoothing: grayscale;
       -o-font-smoothing: antialiased;
     `}
+
+  ${({ theme }) =>
+    theme &&
+    !theme.animated &&
+    css`
+      &:hover {
+        text-decoration: none;
+      }
+    `}
+
   ${/* Adapted from hover.css */ ''}
   ${({ theme, level }) =>
     theme &&
     theme.animated &&
+    theme.color &&
     css`
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
       position: relative;
       overflow: hidden;
       padding-bottom: 0.2em;
+      text-decoration: none;
 
       &:focus {
         outline: solid transparent;

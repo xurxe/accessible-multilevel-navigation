@@ -1,22 +1,12 @@
-:root {
-  --purple: #5b37bf;
-  --pink: #9e005d;
-  --lightPurple: #baa2ff;
-  --lightPink: #ffc7e8;
-  --yellow: #fff48a;
-  --light: #f7ffff;
-  --dark: #2f2942;
-}
-
 * {
   box-sizing: border-box;
-  color: var(--dark);
   font-family: 'Overpass', sans-serif;
   font-size: 20px;
   scroll-behavior: smooth;
 }
 
-body {
+body,
+button {
   margin: 0;
   padding: 0;
 }
