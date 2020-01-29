@@ -35,7 +35,7 @@ const StyledUl = styled.ul`
       flex-wrap: wrap;
       position: absolute;
       right: 0;
-      top: ${levelHeight - 2}px;
+      top: ${levelHeight ? `${levelHeight - 2}px` : '3.5em'};
       left: 0;
       padding: 1em 1.5em;
     `}
