@@ -115,12 +115,12 @@ const StyledI = styled.i`
         `)}
 `;
 
-const NavDropdown = ({ data, layout, theme, level, levelRef }) => {
+const NavDropdown = ({ data, layout, theme, level, prevLevelRef }) => {
   const [pressed, setPressed] = useState(false);
-  const [levelHeight, setLevelHeight] = useState(0);
+  const [prevLevelHeight, setPrevLevelHeight] = useState(0);
   const handleClick = () => {
     setPressed(!pressed);
-    setLevelHeight(levelRef.current.offsetHeight);
+    setPrevLevelHeight(prevLevelRef.current.offsetHeight);
   };
 
   return (
@@ -152,7 +152,8 @@ const NavDropdown = ({ data, layout, theme, level, levelRef }) => {
           layout={layout}
           theme={theme}
           level={level + 1}
-          prevLevelHeight={levelHeight}
+          prevLevelHeight={prevLevelHeight}
+          expanded={pressed}
         />
       ) : null}
     </div>

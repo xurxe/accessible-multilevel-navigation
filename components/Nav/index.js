@@ -53,7 +53,13 @@ const StyledNav = styled.nav`
 
 const Nav = ({ data, layout, theme }) => (
   <StyledNav theme={theme} layout={layout}>
-    <NavLevel data={data} layout={layout} theme={theme} level={0} />
+    <NavLevel
+      data={data}
+      layout={layout}
+      theme={theme}
+      level={0}
+      expanded={false}
+    />
   </StyledNav>
 );
 

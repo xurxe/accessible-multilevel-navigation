@@ -62,12 +62,12 @@ const StyledLi = styled.li`
 `;
 
 const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
-  const levelRef = useRef(null);
+  const currentLevelRef = useRef(null);
 
   return (
     <StyledUl
       role={level == 0 ? 'tree' : 'group'}
-      ref={levelRef}
+      ref={currentLevelRef}
       theme={theme}
       level={level}
       prevLevelHeight={prevLevelHeight}
@@ -86,7 +86,7 @@ const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
               layout={layout}
               theme={theme}
               level={level}
-              levelRef={levelRef}
+              prevLevelRef={currentLevelRef}
             />
           ) : (
             <NavLink data={item} theme={theme} level={level} />
