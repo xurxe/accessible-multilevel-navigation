@@ -5,26 +5,34 @@ import '../global.css';
 import styled, { css } from 'styled-components';
 
 const StyledButton = styled.button`
-  ${({ theme }) =>
+
+  ${({ theme, level }) =>
     theme &&
+    theme.accent &&
     css`
       margin-left: 0.2em;
       height: 1.2em;
       width: 1.2em;
       border: none;
+      &: active {
+        color: ${theme.background[level % theme.background.length]};
+        background-color: ${theme.accent[level % theme.accent.length]};
+      }
     `}
 
   ${({ pressed, theme, level }) =>
     theme &&
     theme.color &&
     theme.background &&
-    (pressed === false
+    (!pressed
       ? css`
+          color: ${theme.color[level % theme.color.length]}};
           background-color: ${theme.background[
             level % theme.background.length
           ]};
         `
       : css`
+          color: ${theme.background[level % theme.background.length]};
           background-color: ${theme.color[level % theme.color.length]};
         `)}
 
@@ -101,26 +109,14 @@ const StyledI = styled.i`
       font-size: 0.5em;
       display: block;
     `}
-
-  ${({ pressed, theme, level }) =>
-    theme &&
-    theme.color &&
-    theme.background &&
-    (pressed == false
-      ? css`
-          color: ${theme.color[level % theme.color.length]}};
-        `
-      : css`
-          color: ${theme.background[level % theme.background.length]};
-        `)}
 `;
 
-const NavDropdown = ({ data, layout, theme, level, prevLevelRef }) => {
+const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
   const [pressed, setPressed] = useState(false);
   const [prevLevelHeight, setPrevLevelHeight] = useState(0);
   const handleClick = () => {
     setPressed(!pressed);
-    setPrevLevelHeight(prevLevelRef.current.offsetHeight);
+    setPrevLevelHeight(previousLevelRef.current.offsetHeight);
   };
 
   return (
@@ -146,16 +142,14 @@ const NavDropdown = ({ data, layout, theme, level, prevLevelRef }) => {
         </StyledButton>
       </div>
 
-      {pressed ? (
-        <NavLevel
-          data={data.children}
-          layout={layout}
-          theme={theme}
-          level={level + 1}
-          prevLevelHeight={prevLevelHeight}
-          expanded={pressed}
-        />
-      ) : null}
+      <NavLevel
+        data={data.children}
+        layout={layout}
+        theme={theme}
+        level={level + 1}
+        prevLevelHeight={prevLevelHeight}
+        expanded={pressed}
+      />
     </div>
   );
 };

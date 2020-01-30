@@ -30,14 +30,14 @@ const brand = {
 };
 
 export const theme1 = {
-  color: ['white', 'white'],
+  color: [brand.white, brand.white],
   background: [brand.purpleHeart, brand.purpleHugs],
   accent: [brand.fog, brand.paleRose],
   animated: true,
 };
 
 export const theme2 = {
-  color: ['white'],
+  color: [brand.white],
   background: [brand.purpleHugs, brand.scarpaFlow, brand.stone],
   accent: [brand.paleRose],
   animated: false,

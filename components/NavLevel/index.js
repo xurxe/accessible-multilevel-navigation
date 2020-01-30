@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import '../global.css';
@@ -14,6 +14,21 @@ const StyledUl = styled.ul`
       margin: 0;
       padding: 0;
       background-color: ${theme.background[level % theme.background.length]};
+      opacity: 1;
+      transition: ${theme.animated ? '0.6s opacity ease-out' : 'none'};
+    `}
+
+	${({ theme, expanded }) =>
+    !expanded &&
+    css`
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+      transition: ${theme.animated
+        ? '0.4s opacity ease-out, 0s visibility 0.6s'
+        : 'none'};
     `}
 
   ${({ layout }) =>
@@ -61,7 +76,14 @@ const StyledLi = styled.li`
     `}
 `;
 
-const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
+const NavLevel = ({
+  data,
+  layout,
+  theme,
+  level,
+  prevLevelHeight,
+  expanded,
+}) => {
   const currentLevelRef = useRef(null);
 
   return (
@@ -72,6 +94,7 @@ const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
       level={level}
       prevLevelHeight={prevLevelHeight}
       layout={layout}
+      expanded={expanded}
     >
       {data.map(item => (
         <StyledLi
@@ -86,7 +109,7 @@ const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
               layout={layout}
               theme={theme}
               level={level}
-              prevLevelRef={currentLevelRef}
+              previousLevelRef={currentLevelRef}
             />
           ) : (
             <NavLink data={item} theme={theme} level={level} />

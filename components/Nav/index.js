@@ -58,7 +58,7 @@ const Nav = ({ data, layout, theme }) => (
       layout={layout}
       theme={theme}
       level={0}
-      expanded={false}
+      expanded={true}
     />
   </StyledNav>
 );
