@@ -64,7 +64,7 @@ const StyledA = styled.a`
         transition-timing-function: ease-out;
       }
 
-      &:hover:before {
+      &:hover:after {
         height: 2px;
         left: 0;
         right: 0;
@@ -87,7 +87,7 @@ const StyledA = styled.a`
         transition-timing-function: ease-out;
       }
 
-      &:focus:after {
+      &:focus:before {
         height: 2px;
         left: 0;
         right: 0;

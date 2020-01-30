@@ -6,18 +6,14 @@ import styled, { css } from 'styled-components';
 
 const StyledButton = styled.button`
 
-  ${({ theme, level }) =>
+  ${({ theme }) =>
     theme &&
     theme.accent &&
     css`
-      margin-left: 0.2em;
+      margin-left: 0.3em;
       height: 1.2em;
       width: 1.2em;
       border: none;
-      &: active {
-        color: ${theme.background[level % theme.background.length]};
-        background-color: ${theme.accent[level % theme.accent.length]};
-      }
     `}
 
   ${({ pressed, theme, level }) =>
@@ -69,35 +65,50 @@ const StyledButton = styled.button`
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
       box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-      position: relative;
-      overflow: hidden;
+      color: ${!pressed
+        ? theme.color[level % theme.color.length]
+        : theme.background[level % theme.background.length]};
+      transition-property: color background;
+      transition-duration: 0.2s;
+
+      &:hover {
+        color: ${!pressed
+          ? theme.background[level % theme.background.length]
+          : theme.color[level % theme.color.length]};
+        background-color: ${!pressed
+          ? theme.color[level % theme.color.length]
+          : theme.background[level % theme.background.length]};
+      }
 
       &:focus {
         outline: solid transparent;
+        color: ${theme.background[level % theme.background.length]};
+        background-color: ${theme.color[level % theme.color.length]};
       }
 
-      &:before {
+      &:after {
         content: '';
         position: absolute;
         z-index: -1;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+        left: 2px;
+        right: 2px;
+        top: 2px;
+        bottom: 2px;
         border-style: solid;
-        border-width: 0;
-        transition-property: border-width;
-        transition-duration: 0.1s;
+        border-width: 2.5px;
+        border-color: ${theme.background[level % theme.background.length]};
+        opacity: 0;
+        transition-property: opacity boder-color;
+        transition-duration: 0.5s;
         transition-timing-function: ease-out;
-        border-color: ${pressed && theme.accent && theme.color
-          ? theme.accent[level % theme.accent.length]
-          : theme.color[level % theme.color.length]};
       }
 
-      &:hover:before,
-      &:focus:before {
-        transform: translateY(0);
-        border-width: 2px;
+      &:hover:after {
+        border-color: ${theme.color[level % theme.color.length]};
+      }
+
+      &:focus:after {
+        opacity: 1;
       }
     `}
 `;

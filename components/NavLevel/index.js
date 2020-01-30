@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import '../global.css';
@@ -72,7 +72,8 @@ const StyledLi = styled.li`
     layout &&
     css`
       list-style: none;
-      ${layout == 'wide' ? 'padding-right: 1em' : 'padding-bottom: 0.5em'}
+      padding-bottom: 0.5em;
+      padding-right: ${layout == 'wide' ? '1.5em' : '0'};
     `}
 `;
 
