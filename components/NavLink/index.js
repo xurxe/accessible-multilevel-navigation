@@ -93,7 +93,7 @@ const StyledA = styled.a`
     `}
 `;
 
-const NavLink = ({ data, theme, level, prevButtonRef }) => {
+const NavLink = ({ data, theme, level }) => {
   const getLuminance = hexcode => {
     // two digits for each (R, G, B)
     const rawR = hexcode.slice(1, 3);
@@ -136,20 +136,12 @@ const NavLink = ({ data, theme, level, prevButtonRef }) => {
 
   const polarity = getThemePolarity(theme, level);
 
-  const handleBlur = () => {
-    prevButtonRef && prevButtonRef.current && prevButtonRef.current.focus();
-    prevButtonRef &&
-      prevButtonRef.current &&
-      console.log(prevButtonRef.current);
-  };
-
   return (
     <StyledA
       href={`https://example.com/${data.slug}`}
       theme={theme}
       level={level}
       polarity={polarity}
-      onBlur={handleBlur}
     >
       {data.text}
     </StyledA>

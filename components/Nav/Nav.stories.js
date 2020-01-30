@@ -1,8 +1,7 @@
 import React from 'react';
 import Nav from '.';
 import data from '../../data/nav';
-import { theme1 } from '../theme';
-import { theme2 } from '../theme';
+import { theme1, theme2 } from '../theme';
 
 export default {
   title: 'Nav',

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import NavLevel from '../NavLevel';
 import NavLink from '../NavLink';
+import RestartButton from '../RestartButton';
 import '../global.css';
 import styled, { css } from 'styled-components';
 
@@ -123,7 +124,14 @@ const StyledI = styled.i`
     `}
 `;
 
-const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
+const NavDropdown = ({
+  data,
+  layout,
+  theme,
+  level,
+  previousLevelRef,
+  prevButtonRef,
+}) => {
   const [pressed, setPressed] = useState(false);
   const [prevLevelHeight, setPrevLevelHeight] = useState(0);
   const handleClick = () => {
@@ -155,6 +163,11 @@ const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
           ></StyledI>
         </StyledButton>
       </div>
+      {prevButtonRef && !pressed && (
+        <RestartButton prevButtonRef={prevButtonRef}>
+          Restart this level
+        </RestartButton>
+      )}
 
       <NavLevel
         data={data.children}

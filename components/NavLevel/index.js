@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
+import RestartButton from '../RestartButton';
 import '../global.css';
 import styled, { css } from 'styled-components';
 
@@ -116,12 +117,12 @@ const NavLevel = ({
               prevButtonRef={index == data.length - 1 ? prevButtonRef : null}
             />
           ) : (
-            <NavLink
-              data={item}
-              theme={theme}
-              level={level}
-              prevButtonRef={index == data.length - 1 ? prevButtonRef : null}
-            />
+            <>
+              <NavLink data={item} theme={theme} level={level} />
+              {index === data.length - 1 && (
+                <RestartButton prevButtonRef={prevButtonRef} />
+              )}
+            </>
           )}
         </StyledLi>
       ))}
