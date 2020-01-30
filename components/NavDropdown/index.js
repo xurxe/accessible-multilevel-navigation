@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import NavLevel from '../NavLevel';
 import NavLink from '../NavLink';
 import '../global.css';
@@ -130,6 +130,7 @@ const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
     setPressed(!pressed);
     setPrevLevelHeight(previousLevelRef.current.offsetHeight);
   };
+  const currentButtonRef = useRef(null);
 
   return (
     <div>
@@ -143,6 +144,7 @@ const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
           pressed={pressed}
           theme={theme}
           level={level}
+          ref={currentButtonRef}
         >
           <StyledI
             className={pressed ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
@@ -161,6 +163,7 @@ const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
         level={level + 1}
         prevLevelHeight={prevLevelHeight}
         expanded={pressed}
+        prevButtonRef={currentButtonRef}
       />
     </div>
   );

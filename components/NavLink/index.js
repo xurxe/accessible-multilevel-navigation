@@ -93,7 +93,7 @@ const StyledA = styled.a`
     `}
 `;
 
-const NavLink = ({ data, theme, level }) => {
+const NavLink = ({ data, theme, level, prevButtonRef }) => {
   const getLuminance = hexcode => {
     // two digits for each (R, G, B)
     const rawR = hexcode.slice(1, 3);
@@ -120,14 +120,12 @@ const NavLink = ({ data, theme, level }) => {
   const getPolarity = (hexForeground, hexBackground) => {
     const luminanceForeground = getLuminance(hexForeground);
     const luminanceBackground = getLuminance(hexBackground);
-    console.log(luminanceForeground);
     return luminanceForeground > luminanceBackground ? true : false;
   };
 
   // returns true if there's a theme and light foreground on dark background, false otherwise
   const getThemePolarity = (theme, level) => {
     if (theme && theme.color && theme.background) {
-      console.log(theme.color[level % theme.color.length]);
       return getPolarity(
         theme.color[level % theme.color.length],
         theme.background[level % theme.background.length]
@@ -138,12 +136,20 @@ const NavLink = ({ data, theme, level }) => {
 
   const polarity = getThemePolarity(theme, level);
 
+  const handleBlur = () => {
+    prevButtonRef && prevButtonRef.current && prevButtonRef.current.focus();
+    prevButtonRef &&
+      prevButtonRef.current &&
+      console.log(prevButtonRef.current);
+  };
+
   return (
     <StyledA
       href={`https://example.com/${data.slug}`}
       theme={theme}
       level={level}
       polarity={polarity}
+      onBlur={handleBlur}
     >
       {data.text}
     </StyledA>

@@ -85,6 +85,7 @@ const NavLevel = ({
   level,
   prevLevelHeight,
   expanded,
+  prevButtonRef,
 }) => {
   const currentLevelRef = useRef(null);
 
@@ -98,7 +99,7 @@ const NavLevel = ({
       layout={layout}
       expanded={expanded}
     >
-      {data.map(item => (
+      {data.map((item, index) => (
         <StyledLi
           key={item.id}
           role={item.children ? 'treeitem' : 'none'}
@@ -112,9 +113,15 @@ const NavLevel = ({
               theme={theme}
               level={level}
               previousLevelRef={currentLevelRef}
+              prevButtonRef={index == data.length - 1 ? prevButtonRef : null}
             />
           ) : (
-            <NavLink data={item} theme={theme} level={level} />
+            <NavLink
+              data={item}
+              theme={theme}
+              level={level}
+              prevButtonRef={index == data.length - 1 ? prevButtonRef : null}
+            />
           )}
         </StyledLi>
       ))}
