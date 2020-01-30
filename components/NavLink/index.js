@@ -9,6 +9,9 @@ const StyledA = styled.a`
     theme.accent &&
     css`
       color: ${theme.color[level % theme.color.length]};
+      &:hover {
+        text-decoration: none;
+      }
       &:active {
         color: ${theme.accent[level % theme.accent.length]};
       }
@@ -22,15 +25,6 @@ const StyledA = styled.a`
       -moz-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       -o-font-smoothing: antialiased;
-    `}
-
-  ${({ theme }) =>
-    theme &&
-    !theme.animated &&
-    css`
-      &:hover {
-        text-decoration: none;
-      }
     `}
 
   ${/* Adapted from hover.css */ ''}

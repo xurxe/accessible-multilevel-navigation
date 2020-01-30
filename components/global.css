@@ -5,8 +5,7 @@
   scroll-behavior: smooth;
 }
 
-body,
-button {
+body {
   margin: 0;
   padding: 0;
 }

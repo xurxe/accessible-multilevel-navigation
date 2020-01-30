@@ -52,7 +52,7 @@ const StyledUl = styled.ul`
       right: 0;
       top: ${prevLevelHeight ? `${prevLevelHeight - 2}px` : '3.5em'};
       left: 0;
-      padding: 1em 1.5em;
+      padding: 0.75em 1.5em;
     `}
 
   ${({ theme, level }) =>
@@ -72,7 +72,8 @@ const StyledLi = styled.li`
     layout &&
     css`
       list-style: none;
-      padding-bottom: 0.5em;
+      padding-top: 0.25em;
+      padding-bottom: 0.25em;
       padding-right: ${layout == 'wide' ? '1.5em' : '0'};
     `}
 `;

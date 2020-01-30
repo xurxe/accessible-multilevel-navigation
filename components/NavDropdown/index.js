@@ -10,6 +10,7 @@ const StyledButton = styled.button`
     theme &&
     theme.accent &&
     css`
+      padding: 0;
       margin-left: 0.3em;
       height: 1.2em;
       width: 1.2em;
