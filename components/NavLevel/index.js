@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import '../global.css';
@@ -6,15 +6,28 @@ import styled, { css } from 'styled-components';
 
 const StyledUl = styled.ul`
 
-  ${({ theme, level }) =>
+  ${({ theme, level, expanded }) =>
     theme &&
     theme.background &&
     css`
       display: flex;
       margin: 0;
       padding: 0;
-      background-color: ${theme.background[level % theme.background.length]};
-    `}
+			background-color: ${theme.background[level % theme.background.length]};
+			opacity: 1;
+			transition: 0.6s opacity ease-out;
+		`}
+
+	${({ expanded }) =>
+		!expanded && 
+		css`
+			visibility: hidden;
+			opacity: 0;
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+			transition: 0.4s opacity ease-out, 0s visibility 0.6s;
+		`}
 
   ${({ layout }) =>
     layout &&
@@ -61,17 +74,27 @@ const StyledLi = styled.li`
     `}
 `;
 
+<<<<<<< HEAD
 const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
   const levelRef = useRef(null);
+=======
+const NavLevel = ({ data, layout, theme, level, prevLevelHeight, expanded }) => {
+	const currentLevelRef = useRef(null);
+>>>>>>> 86ae6ef5cb52cbb06e9ea156da02e7e4453bf90a
 
   return (
     <StyledUl
       role={level == 0 ? 'tree' : 'group'}
-      ref={levelRef}
+      ref={currentLevelRef}
       theme={theme}
       level={level}
       prevLevelHeight={prevLevelHeight}
+<<<<<<< HEAD
       layout={layout}
+=======
+			layout={layout}
+			expanded={expanded}
+>>>>>>> 86ae6ef5cb52cbb06e9ea156da02e7e4453bf90a
     >
       {data.map(item => (
         <StyledLi
@@ -86,7 +109,7 @@ const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
               layout={layout}
               theme={theme}
               level={level}
-              levelRef={levelRef}
+              previousLevelRef={currentLevelRef}
             />
           ) : (
             <NavLink data={item} theme={theme} level={level} />
