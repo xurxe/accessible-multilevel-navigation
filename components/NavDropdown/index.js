@@ -5,6 +5,7 @@ import '../global.css';
 import styled, { css } from 'styled-components';
 
 const StyledButton = styled.button`
+
   ${({ theme }) =>
     theme &&
     css`
@@ -89,12 +90,12 @@ const StyledI = styled.i`
         `)}
 `;
 
-const NavDropdown = ({ data, layout, theme, level, levelRef }) => {
+const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
   const [pressed, setPressed] = useState(false);
-  const [levelHeight, setLevelHeight] = useState(0);
+  const [prevLevelHeight, setPrevLevelHeight] = useState(0);
   const handleClick = () => {
     setPressed(!pressed);
-    setLevelHeight(levelRef.current.offsetHeight);
+    setPrevLevelHeight(previousLevelRef.current.offsetHeight);
   };
 
   return (
@@ -120,15 +121,14 @@ const NavDropdown = ({ data, layout, theme, level, levelRef }) => {
         </StyledButton>
       </div>
 
-      {pressed ? (
         <NavLevel
           data={data.children}
           layout={layout}
           theme={theme}
           level={level + 1}
-          levelHeight={levelHeight}
+					prevLevelHeight={prevLevelHeight}
+					expanded={pressed}
         />
-      ) : null}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import '../global.css';
@@ -6,15 +6,27 @@ import styled, { css } from 'styled-components';
 
 const StyledUl = styled.ul`
 
-  ${({ theme, level }) =>
+  ${({ theme, level, expanded, currentLevelHeight }) =>
     theme &&
     theme.background &&
     css`
       display: flex;
       margin: 0;
       padding: 0;
-      background-color: ${theme.background[level % theme.background.length]};
-    `}
+			background-color: ${theme.background[level % theme.background.length]};
+			max-height: ${currentLevelHeight}px;
+			opacity: 1;
+			transition: 0.6s max-height ease-out, 0.6s opacity ease-out, 0s visibility 0.1s;
+		`}
+
+	${({ expanded }) =>
+		!expanded && 
+		css`
+			visibility: hidden;
+			max-height: 0px;
+			opacity: 0;
+			transition: 0.6s max-height ease-out, 0.6s opacity ease-out,  0s visibility 0.1s;
+		`}
 
   ${({ layout }) =>
     layout &&
@@ -61,17 +73,22 @@ const StyledLi = styled.li`
     `}
 `;
 
-const NavLevel = ({ data, layout, theme, level, levelHeight }) => {
-  const levelRef = useRef(null);
+const NavLevel = ({ data, layout, theme, level, prevLevelHeight, expanded }) => {
+	const currentLevelRef = useRef(null);
+  const [currentLevelHeight, setCurrentLevelHeight] = useState('auto');
+	useEffect(() => {setCurrentLevelHeight(currentLevelRef.current.offsetHeight)});
+	{console.log(currentLevelHeight)}
 
   return (
     <StyledUl
       role={level == 0 ? 'tree' : 'group'}
-      ref={levelRef}
+      ref={currentLevelRef}
       theme={theme}
       level={level}
-      levelHeight={levelHeight}
-      layout={layout}
+      prevLevelHeight={prevLevelHeight}
+			layout={layout}
+			expanded={expanded}
+			currentLevelHeight={currentLevelHeight}
     >
       {data.map(item => (
         <StyledLi
@@ -86,7 +103,7 @@ const NavLevel = ({ data, layout, theme, level, levelHeight }) => {
               layout={layout}
               theme={theme}
               level={level}
-              levelRef={levelRef}
+              previousLevelRef={currentLevelRef}
             />
           ) : (
             <NavLink data={item} theme={theme} level={level} />
