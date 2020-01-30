@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 
 const StyledUl = styled.ul`
 
-  ${({ theme, level, expanded, currentLevelHeight }) =>
+  ${({ theme, level, expanded }) =>
     theme &&
     theme.background &&
     css`
@@ -14,18 +14,19 @@ const StyledUl = styled.ul`
       margin: 0;
       padding: 0;
 			background-color: ${theme.background[level % theme.background.length]};
-			max-height: ${currentLevelHeight}px;
 			opacity: 1;
-			transition: 0.6s max-height ease-out, 0.6s opacity ease-out, 0s visibility 0.1s;
+			transition: 0.6s opacity ease-out;
 		`}
 
 	${({ expanded }) =>
 		!expanded && 
 		css`
 			visibility: hidden;
-			max-height: 0px;
 			opacity: 0;
-			transition: 0.6s max-height ease-out, 0.6s opacity ease-out,  0s visibility 0.1s;
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+			transition: 0.4s opacity ease-out, 0s visibility 0.6s;
 		`}
 
   ${({ layout }) =>
@@ -75,9 +76,6 @@ const StyledLi = styled.li`
 
 const NavLevel = ({ data, layout, theme, level, prevLevelHeight, expanded }) => {
 	const currentLevelRef = useRef(null);
-  const [currentLevelHeight, setCurrentLevelHeight] = useState('auto');
-	useEffect(() => {setCurrentLevelHeight(currentLevelRef.current.offsetHeight)});
-	{console.log(currentLevelHeight)}
 
   return (
     <StyledUl
@@ -88,7 +86,6 @@ const NavLevel = ({ data, layout, theme, level, prevLevelHeight, expanded }) => 
       prevLevelHeight={prevLevelHeight}
 			layout={layout}
 			expanded={expanded}
-			currentLevelHeight={currentLevelHeight}
     >
       {data.map(item => (
         <StyledLi
