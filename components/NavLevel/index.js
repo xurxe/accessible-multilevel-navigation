@@ -74,13 +74,8 @@ const StyledLi = styled.li`
     `}
 `;
 
-<<<<<<< HEAD
-const NavLevel = ({ data, layout, theme, level, prevLevelHeight }) => {
-  const levelRef = useRef(null);
-=======
 const NavLevel = ({ data, layout, theme, level, prevLevelHeight, expanded }) => {
 	const currentLevelRef = useRef(null);
->>>>>>> 86ae6ef5cb52cbb06e9ea156da02e7e4453bf90a
 
   return (
     <StyledUl
@@ -89,12 +84,8 @@ const NavLevel = ({ data, layout, theme, level, prevLevelHeight, expanded }) => 
       theme={theme}
       level={level}
       prevLevelHeight={prevLevelHeight}
-<<<<<<< HEAD
-      layout={layout}
-=======
 			layout={layout}
 			expanded={expanded}
->>>>>>> 86ae6ef5cb52cbb06e9ea156da02e7e4453bf90a
     >
       {data.map(item => (
         <StyledLi

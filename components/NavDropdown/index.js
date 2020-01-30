@@ -152,12 +152,8 @@ const NavDropdown = ({ data, layout, theme, level, previousLevelRef }) => {
           layout={layout}
           theme={theme}
           level={level + 1}
-<<<<<<< HEAD
-          prevLevelHeight={levelHeight}
-=======
 					prevLevelHeight={prevLevelHeight}
 					expanded={pressed}
->>>>>>> 86ae6ef5cb52cbb06e9ea156da02e7e4453bf90a
         />
     </div>
   );
