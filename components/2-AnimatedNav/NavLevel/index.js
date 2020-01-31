@@ -1,41 +1,39 @@
 import React, { useRef } from 'react';
+import styled from 'styled-components';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import RestartButton from '../RestartButton';
-import '../global.css';
-import styled, { css } from 'styled-components';
+import '../../global.css';
 
 const StyledUl = styled.ul`
 
   ${({ theme, level }) =>
     theme &&
     theme.background &&
-    css`
+    `
       display: flex;
       margin: 0;
       padding: 0;
       background-color: ${theme.background[level % theme.background.length]};
       opacity: 1;
-      transition: ${theme.animated ? '0.6s opacity ease-out' : 'none'};
+      transition: 0.6s opacity ease-out;
     `}
 
-	${({ theme, expanded }) =>
+	${({ expanded }) =>
     !expanded &&
-    css`
+    `
       visibility: hidden;
       opacity: 0;
       position: absolute;
       top: -9999px;
       left: -9999px;
-      transition: ${theme.animated
-        ? '0.4s opacity ease-out, 0s visibility 0.6s'
-        : 'none'};
+      transition: 0.4s opacity ease-out, 0s visibility 0.6s;
     `}
 
   ${({ layout }) =>
     layout &&
     layout == 'tall' &&
-    css`
+    `
       flex-direction: column;
       height: 100%;
       padding: 0.5em 1em;
@@ -46,7 +44,7 @@ const StyledUl = styled.ul`
   ${({ layout, prevLevelHeight }) =>
     layout &&
     layout == 'wide' &&
-    css`
+    `
       flex-direction: row;
       flex-wrap: wrap;
       position: absolute;
@@ -59,7 +57,7 @@ const StyledUl = styled.ul`
   ${({ theme, level }) =>
     theme &&
     level == 0 &&
-    css`
+    `
       position: static;
       margin-top: 0;
       height: 100%;
@@ -71,7 +69,7 @@ const StyledLi = styled.li`
   ${({ theme, layout }) =>
     theme &&
     layout &&
-    css`
+    `
       list-style: none;
       padding-top: 0.25em;
       padding-bottom: 0.25em;

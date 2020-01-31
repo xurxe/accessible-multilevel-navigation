@@ -1,16 +1,15 @@
 import React, { useRef, useState } from 'react';
+import styled from 'styled-components';
 import NavLevel from '../NavLevel';
 import NavLink from '../NavLink';
 import RestartButton from '../RestartButton';
-import '../global.css';
-import styled, { css } from 'styled-components';
+import '../../global.css';
 
 const StyledButton = styled.button`
 
   ${({ theme }) =>
     theme &&
-    theme.accent &&
-    css`
+    `
       padding: 0;
       margin-left: 0.3em;
       height: 1.2em;
@@ -23,67 +22,56 @@ const StyledButton = styled.button`
     theme.color &&
     theme.background &&
     (!pressed
-      ? css`
+      ? `
           color: ${theme.color[level % theme.color.length]}};
-          background-color: ${theme.background[
-            level % theme.background.length
-          ]};
+          background-color: ${
+            theme.background[level % theme.background.length]
+          };
         `
-      : css`
+      : `
           color: ${theme.background[level % theme.background.length]};
           background-color: ${theme.color[level % theme.color.length]};
         `)}
 
   ${({ theme }) =>
     theme &&
-    theme.animated &&
-    css`
+    `
       transition-property: background-color;
       transition-duration: 0.5s;
       transition-timing-function: ease-out;
     `}
-
-  ${({ theme, level }) =>
-    theme &&
-    !theme.animated &&
-    theme.color &&
-    theme.background &&
-    css`
-      border: 2px solid
-        ${theme.background && theme.background[level % theme.background.length]};
-      &:hover {
-        border: 2px solid
-          ${theme.color && theme.color[level % theme.color.length]};
-      }
-    `}
         
   ${/* Adapted from hover.css */ ''}
-  ${({ pressed, theme, level }) =>
-    theme.animated &&
+  ${({ theme, level, pressed }) =>
     theme.accent &&
     theme.color &&
-    css`
+    `
       display: inline-block;
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
       box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-      color: ${!pressed
-        ? theme.color[level % theme.color.length]
-        : theme.background[level % theme.background.length]};
+      color: ${
+        !pressed
+          ? theme.color[level % theme.color.length]
+          : theme.background[level % theme.background.length]
+      };
       transition-property: color background;
       transition-duration: 0.2s;
 
       &:hover {
-        color: ${!pressed
-          ? theme.background[level % theme.background.length]
-          : theme.color[level % theme.color.length]};
-        background-color: ${!pressed
-          ? theme.color[level % theme.color.length]
-          : theme.background[level % theme.background.length]};
+        color: ${
+          !pressed
+            ? theme.background[level % theme.background.length]
+            : theme.color[level % theme.color.length]
+        };
+        background-color: ${
+          !pressed
+            ? theme.color[level % theme.color.length]
+            : theme.background[level % theme.background.length]
+        };
       }
 
       &:focus {
-        outline: solid transparent;
         color: ${theme.background[level % theme.background.length]};
         background-color: ${theme.color[level % theme.color.length]};
       }
@@ -118,7 +106,7 @@ const StyledButton = styled.button`
 const StyledI = styled.i`
   ${({ theme }) =>
     theme &&
-    css`
+    `
       font-size: 0.5em;
       display: block;
     `}

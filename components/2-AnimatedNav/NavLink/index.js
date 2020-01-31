@@ -1,13 +1,13 @@
 import React from 'react';
-import '../global.css';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import '../../global.css';
 
 const StyledA = styled.a`
   ${({ theme, level }) =>
     theme &&
     theme.color &&
     theme.accent &&
-    css`
+    `
       color: ${theme.color[level % theme.color.length]};
       &:hover {
         text-decoration: none;
@@ -19,7 +19,7 @@ const StyledA = styled.a`
 
   ${({ polarity }) =>
     polarity &&
-    css`
+    `
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       -moz-font-smoothing: antialiased;
@@ -30,20 +30,15 @@ const StyledA = styled.a`
   ${/* Adapted from hover.css */ ''}
   ${({ theme, level }) =>
     theme &&
-    theme.animated &&
     theme.color &&
     theme.accent &&
-    css`
+    `
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
       position: relative;
       overflow: hidden;
       padding-bottom: 0.2em;
       text-decoration: none;
-
-      &:focus {
-        outline: solid transparent;
-      }
 
       &:before {
         content: '';

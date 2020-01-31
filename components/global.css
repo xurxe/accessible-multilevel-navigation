@@ -9,3 +9,9 @@ body {
   margin: 0;
   padding: 0;
 }
+
+/* Allows the focus-visible library to show focus styles only when it's programmatically determined that they're needed */
+.js-focus-visible :focus:not(.focus-visible),
+.js-focus-visible :focus:not([data-focus-visible-added]) {
+  outline: none;
+}
