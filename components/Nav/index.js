@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import 'focus-visible';
 import NavLevel from '../NavLevel';
-import '../../global.css';
+import '../global.css';
 
 const StyledNav = styled.nav`
   ${
@@ -61,9 +61,16 @@ const StyledNav = styled.nav`
     `}
 `;
 
-const Nav = ({ data, layout, theme }) => (
+const Nav = ({ data, theme, layout, animated }) => (
   <StyledNav theme={theme} layout={layout}>
-    <NavLevel data={data} layout={layout} theme={theme} level={0} />
+    <NavLevel
+      data={data}
+      layout={layout}
+      theme={theme}
+      animated={animated}
+      level={0}
+      expanded={true}
+    />
   </StyledNav>
 );
 

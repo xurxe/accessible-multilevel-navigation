@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import '../../global.css';
+import '../global.css';
 
 const StyledA = styled.a`
   ${({ theme, level }) =>
@@ -9,9 +9,8 @@ const StyledA = styled.a`
     theme.accent &&
     `
       color: ${theme.color[level % theme.color.length]};
-      text-decoration: none;
       &:hover {
-        text-decoration: underline;
+        text-decoration: none;
       }
       &:active {
         color: ${theme.accent[level % theme.accent.length]};
@@ -27,9 +26,70 @@ const StyledA = styled.a`
       -moz-osx-font-smoothing: grayscale;
       -o-font-smoothing: antialiased;
     `}
+
+  ${/* Adapted from hover.css */ ''}
+  ${({ theme, level, animated }) =>
+    theme &&
+    theme.color &&
+    theme.accent &&
+    animated &&
+    `
+      vertical-align: middle;
+      transform: perspective(1px) translateZ(0);
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 0.2em;
+      text-decoration: none;
+
+      &:before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 51%;
+        right: 51%;
+        bottom: 0;
+        background: ${theme.color[level % theme.color.length]};
+        transition-property: left, right;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-out;
+      }
+
+      &:hover:after {
+        height: 2px;
+        left: 0;
+        right: 0;
+      }
+
+      &:active:before {
+        background: ${theme.accent[level % theme.accent.length]};
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 51%;
+        right: 51%;
+        top: -0.1em;
+        background: ${theme.color[level % theme.color.length]};
+        transition-property: left, right;
+        transition-duration: 0.3s;
+        transition-timing-function: ease-out;
+      }
+
+      &:focus:before {
+        height: 2px;
+        left: 0;
+        right: 0;
+      }
+
+      &:active:after {
+        background: ${theme.accent[level % theme.accent.length]};
+      }
+    `}
 `;
 
-const NavLink = ({ data, theme, level }) => {
+const NavLink = ({ data, theme, animated, level }) => {
   const getLuminance = hexcode => {
     // two digits for each (R, G, B)
     const rawR = hexcode.slice(1, 3);
@@ -76,6 +136,7 @@ const NavLink = ({ data, theme, level }) => {
     <StyledA
       href={`https://example.com/${data.slug}`}
       theme={theme}
+      animated={animated}
       level={level}
       polarity={polarity}
     >

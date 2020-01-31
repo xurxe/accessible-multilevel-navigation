@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import NavDropdown from '../NavDropdown';
 import NavLink from '../NavLink';
 import RestartButton from '../RestartButton';
-import '../../global.css';
+import '../global.css';
 
 const StyledUl = styled.ul`
 
-  ${({ theme, level }) =>
+  ${({ theme, level, animated }) =>
     theme &&
     theme.background &&
     `
@@ -15,10 +15,10 @@ const StyledUl = styled.ul`
       margin: 0;
       background-color: ${theme.background[level % theme.background.length]};
       opacity: 1;
-      transition: 0.6s opacity ease-out;
+      transition: ${animated ? '0.6s opacity ease-out' : 'none'};
     `}
 
-	${({ expanded }) =>
+	${({ expanded, animated }) =>
     !expanded &&
     `
       visibility: hidden;
@@ -26,7 +26,7 @@ const StyledUl = styled.ul`
       position: absolute;
       top: -9999px;
       left: -9999px;
-      transition: 0.4s opacity ease-out, 0s visibility 0.6s;
+      ${animated ? '0.6s opacity ease-out, 0s visibility 0.6s' : 'none'};
     `}
 
   ${({ layout }) =>
@@ -78,8 +78,9 @@ const StyledLi = styled.li`
 
 const NavLevel = ({
   data,
-  layout,
   theme,
+  layout,
+  animated,
   level,
   prevLevelHeight,
   expanded,
@@ -89,33 +90,40 @@ const NavLevel = ({
 
   return (
     <StyledUl
-      role={level == 0 ? 'tree' : 'group'}
-      ref={currentLevelRef}
       theme={theme}
+      layout={layout}
+      animated={animated}
       level={level}
       prevLevelHeight={prevLevelHeight}
-      layout={layout}
       expanded={expanded}
+      ref={currentLevelRef}
+      role={level == 0 ? 'tree' : 'group'}
     >
       {data.map((item, index) => (
         <StyledLi
-          key={item.id}
-          role={item.children ? 'treeitem' : 'none'}
           theme={theme}
           layout={layout}
+          key={item.id}
+          role={item.children ? 'treeitem' : 'none'}
         >
           {item.children ? (
             <NavDropdown
               data={item}
-              layout={layout}
               theme={theme}
+              layout={layout}
+              animated={animated}
               level={level}
               previousLevelRef={currentLevelRef}
-              prevButtonRef={index == data.length - 1 ? prevButtonRef : null}
+              prevButtonRef={index == data.length - 1 && prevButtonRef}
             />
           ) : (
             <>
-              <NavLink data={item} theme={theme} level={level} />
+              <NavLink
+                data={item}
+                theme={theme}
+                animated={animated}
+                level={level}
+              />
               {index === data.length - 1 && (
                 <RestartButton prevButtonRef={prevButtonRef} />
               )}

@@ -3,7 +3,16 @@ import styled from 'styled-components';
 import NavLevel from '../NavLevel';
 import NavLink from '../NavLink';
 import RestartButton from '../RestartButton';
-import '../../global.css';
+import '../global.css';
+
+const StyledDiv = styled.div`
+  ${({ theme, animated }) =>
+    theme &&
+    theme.color &&
+    !animated &&
+    `display: flex;
+    align-items: center;`}
+`;
 
 const StyledButton = styled.button`
   ${({ theme }) =>
@@ -17,6 +26,28 @@ const StyledButton = styled.button`
     border: none;
     }
   `}
+
+  ${({ theme, level, animated }) =>
+    theme &&
+    theme.color &&
+    theme.background &&
+    !animated &&
+    `
+    border: 2px solid
+      ${theme.background[level % theme.background.length]};
+    &:hover, &:focus {
+      border: 2px solid
+        ${theme.color[level % theme.color.length]};
+    }
+  `}
+
+  ${({ theme, animated }) =>
+    theme &&
+    animated &&
+    `
+      border: none;
+      transition: 0.5s background-color ease-out;
+    `}
 
   ${({ pressed, theme, level }) =>
     theme &&
@@ -34,18 +65,12 @@ const StyledButton = styled.button`
           background-color: ${theme.color[level % theme.color.length]};
         `)}
 
-  ${({ theme }) =>
-    theme &&
-    `
-      transition-property: background-color;
-      transition-duration: 0.5s;
-      transition-timing-function: ease-out;
-    `}
         
   ${/* Adapted from hover.css */ ''}
-  ${({ theme, level, pressed }) =>
+  ${({ theme, level, pressed, animated }) =>
     theme.accent &&
     theme.color &&
+    animated &&
     `
       display: inline-block;
       vertical-align: middle;
@@ -117,6 +142,7 @@ const NavDropdown = ({
   data,
   layout,
   theme,
+  animated,
   level,
   previousLevelRef,
   prevButtonRef,
@@ -144,27 +170,34 @@ const NavDropdown = ({
 
   return (
     <div ref={currentDropdownRef}>
-      <div>
-        <NavLink data={data} layout={layout} theme={theme} level={level} />
-        <StyledButton
-          type="button"
-          onClick={handleClick}
-          aria-pressed={pressed}
-          aria-label={pressed ? `Collapse ${data.text}` : `Expand ${data.text}`}
-          pressed={pressed}
+      <StyledDiv theme={theme} animated={animated}>
+        <NavLink
+          data={data}
+          layout={layout}
           theme={theme}
+          animated={animated}
+          level={level}
+        />
+        <StyledButton
+          theme={theme}
+          animated={animated}
           level={level}
           ref={currentButtonRef}
+          type="button"
+          onClick={handleClick}
+          pressed={pressed}
+          aria-pressed={pressed}
+          aria-label={pressed ? `Collapse ${data.text}` : `Expand ${data.text}`}
         >
           <StyledI
-            className={pressed ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
-            pressed={pressed}
-            aria-hidden
             theme={theme}
             level={level}
+            className={pressed ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
+            pressed={pressed}
+            aria-hidden={true}
           ></StyledI>
         </StyledButton>
-      </div>
+      </StyledDiv>
       {prevButtonRef && !pressed && (
         <RestartButton prevButtonRef={prevButtonRef}>
           Restart this level
@@ -173,11 +206,12 @@ const NavDropdown = ({
 
       <NavLevel
         data={data.children}
-        layout={layout}
         theme={theme}
+        layout={layout}
+        animated={animated}
+        expanded={pressed}
         level={level + 1}
         prevLevelHeight={prevLevelHeight}
-        expanded={pressed}
         prevButtonRef={currentButtonRef}
       />
     </div>
