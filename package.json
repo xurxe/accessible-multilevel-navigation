@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "start-storybook -p 6006",
     "test": "echo Not implemented",
-    "build": "build-storybook"
+    "build": "build-storybook",
+    "build-storybook": "build-storybook -c .storybook"
   },
   "dependencies": {
     "core-js": "^3.4.1",
