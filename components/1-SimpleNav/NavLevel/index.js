@@ -13,18 +13,8 @@ const StyledUl = styled.ul`
     `
       display: flex;
       margin: 0;
-      padding: 0;
       background-color: ${theme.background[level % theme.background.length]};
       opacity: 1;
-    `}
-
-	${({ expanded }) =>
-    !expanded &&
-    `
-      visibility: hidden;
-      opacity: 0;
-      position: absolute;
-      top: -9999px;
     `}
 
   ${({ layout }) =>
@@ -46,7 +36,7 @@ const StyledUl = styled.ul`
       flex-wrap: wrap;
       position: absolute;
       right: 0;
-      top: ${prevLevelHeight ? `${prevLevelHeight - 2}px` : '3.5em'};
+      top: ${`${prevLevelHeight - 2}px`};
       left: 0;
       padding: 0.75em 1.5em;
     `}
@@ -69,7 +59,7 @@ const StyledLi = styled.li`
     `
       list-style: none;
       padding-top: 0.25em;
-      padding-bottom: 0.25em;
+      padding-bottom: 0.15em;
       padding-right: ${layout == 'wide' ? '1.5em' : '0'};
     `}
 `;
@@ -80,7 +70,6 @@ const NavLevel = ({
   theme,
   level,
   prevLevelHeight,
-  expanded,
   prevButtonRef,
 }) => {
   const currentLevelRef = useRef(null);
@@ -93,7 +82,6 @@ const NavLevel = ({
       level={level}
       prevLevelHeight={prevLevelHeight}
       layout={layout}
-      expanded={expanded}
     >
       {data.map((item, index) => (
         <StyledLi

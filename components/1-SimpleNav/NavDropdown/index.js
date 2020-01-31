@@ -5,28 +5,29 @@ import NavLink from '../NavLink';
 import RestartButton from '../RestartButton';
 import '../../global.css';
 
-const StyledButton = styled.button`
-
+const StyledDiv = styled.div`
   ${({ theme }) =>
     theme &&
-    `
-      padding: 0;
-      margin-left: 0.3em;
-      height: 1.2em;
-      width: 1.2em;
-      border: none;
-    `}
+    theme.color &&
+    `display: flex;
+    align-items: center;`}
+`;
 
+const StyledButton = styled.button`
   ${({ theme, level }) =>
     theme &&
     theme.color &&
     theme.background &&
     `
+    padding: 0;
+    margin-left: 0.3em;
+    height: 1.2em;
+    width: 1.2em;
     border: 2px solid
-      ${theme.background && theme.background[level % theme.background.length]};
+      ${theme.background[level % theme.background.length]};
     &:hover, &:focus {
       border: 2px solid
-        ${theme.color && theme.color[level % theme.color.length]};
+        ${theme.color[level % theme.color.length]};
     }
   `}
 
@@ -45,7 +46,6 @@ const StyledButton = styled.button`
           color: ${theme.background[level % theme.background.length]};
           background-color: ${theme.color[level % theme.color.length]};
         `)}
-      
 `;
 
 const StyledI = styled.i`
@@ -75,7 +75,7 @@ const NavDropdown = ({
 
   return (
     <div>
-      <div>
+      <StyledDiv theme={theme}>
         <NavLink data={data} layout={layout} theme={theme} level={level} />
         <StyledButton
           type="button"
@@ -95,22 +95,22 @@ const NavDropdown = ({
             level={level}
           ></StyledI>
         </StyledButton>
-      </div>
+      </StyledDiv>
       {prevButtonRef && !pressed && (
         <RestartButton prevButtonRef={prevButtonRef}>
           Restart this level
         </RestartButton>
       )}
-
-      <NavLevel
-        data={data.children}
-        layout={layout}
-        theme={theme}
-        level={level + 1}
-        prevLevelHeight={prevLevelHeight}
-        expanded={pressed}
-        prevButtonRef={currentButtonRef}
-      />
+      {pressed && (
+        <NavLevel
+          data={data.children}
+          layout={layout}
+          theme={theme}
+          level={level + 1}
+          prevLevelHeight={prevLevelHeight}
+          prevButtonRef={currentButtonRef}
+        />
+      )}
     </div>
   );
 };

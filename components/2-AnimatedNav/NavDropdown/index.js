@@ -6,16 +6,17 @@ import RestartButton from '../RestartButton';
 import '../../global.css';
 
 const StyledButton = styled.button`
-
   ${({ theme }) =>
     theme &&
+    theme.color &&
     `
-      padding: 0;
-      margin-left: 0.3em;
-      height: 1.2em;
-      width: 1.2em;
-      border: none;
-    `}
+    padding: 0;
+    margin-left: 0.3em;
+    height: 1.2em;
+    width: 1.2em;
+    border: none;
+    }
+  `}
 
   ${({ pressed, theme, level }) =>
     theme &&

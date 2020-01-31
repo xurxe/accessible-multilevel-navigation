@@ -9,8 +9,9 @@ const StyledA = styled.a`
     theme.accent &&
     `
       color: ${theme.color[level % theme.color.length]};
+      text-decoration: none;
       &:hover {
-        text-decoration: none;
+        text-decoration: underline;
       }
       &:active {
         color: ${theme.accent[level % theme.accent.length]};

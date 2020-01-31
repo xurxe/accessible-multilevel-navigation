@@ -12,6 +12,8 @@ export default {
   },
 };
 
+export const none = () => <Nav data={data} />;
+
 export const wide = () => <Nav data={data} layout="wide" theme={theme2} />;
 
 export const tall = () => <Nav data={data} layout="tall" theme={theme2} />;

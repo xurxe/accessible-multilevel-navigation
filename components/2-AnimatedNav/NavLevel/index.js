@@ -13,7 +13,6 @@ const StyledUl = styled.ul`
     `
       display: flex;
       margin: 0;
-      padding: 0;
       background-color: ${theme.background[level % theme.background.length]};
       opacity: 1;
       transition: 0.6s opacity ease-out;
