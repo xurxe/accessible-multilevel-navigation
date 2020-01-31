@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NavLevel from '../NavLevel';
 import NavLink from '../NavLink';
@@ -127,10 +127,23 @@ const NavDropdown = ({
     setPressed(!pressed);
     setPrevLevelHeight(previousLevelRef.current.offsetHeight);
   };
+  const currentDropdownRef = useRef(null);
   const currentButtonRef = useRef(null);
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+  }, []);
+
+  const handleOutsideClick = e => {
+    if (
+      currentDropdownRef.current &&
+      !currentDropdownRef.current.contains(e.target)
+    ) {
+      setPressed(false);
+    }
+  };
 
   return (
-    <div>
+    <div ref={currentDropdownRef}>
       <div>
         <NavLink data={data} layout={layout} theme={theme} level={level} />
         <StyledButton
