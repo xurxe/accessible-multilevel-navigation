@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import NavDropdown from '../NavDropdown';
+import NavLevelDropdown from '../NavLevelDropdown';
 import NavLink from '../NavLink';
 import RestartButton from '../RestartButton';
 import '../global.css';
@@ -133,7 +133,7 @@ const NavLevel = ({
           role={item.children ? 'treeitem' : 'none'}
         >
           {item.children ? (
-            <NavDropdown
+            <NavLevelDropdown
               data={item}
               theme={theme}
               layout={layout}

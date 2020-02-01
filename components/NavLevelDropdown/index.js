@@ -168,7 +168,7 @@ const StyledI = styled.i`
     `}
 `;
 
-const NavDropdown = ({
+const NavLevelDropdown = ({
   data,
   layout,
   theme,
@@ -276,4 +276,4 @@ const NavDropdown = ({
   );
 };
 
-export default NavDropdown;
+export default NavLevelDropdown;
