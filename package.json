@@ -12,6 +12,7 @@
     "build-storybook": "build-storybook -c .storybook"
   },
   "dependencies": {
+    "@storybook/addon-storysource": "^5.3.9",
     "core-js": "^3.4.1",
     "express": "^4.17.1",
     "focus-visible": "^5.0.2",

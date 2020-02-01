@@ -15,17 +15,17 @@ export default {
 export const noTheme = () => <Nav data={data} />;
 
 export const wideSimple = () => (
-  <Nav data={data} layout="wide" theme={theme1} animated={false} />
+  <Nav data={data} theme={theme1} layout="wide" animated={false} />
 );
 
 export const tallSimple = () => (
-  <Nav data={data} layout="tall" theme={theme1} animated={false} />
+  <Nav data={data} theme={theme1} layout="tall" animated={false} />
 );
 
 export const wideAnimated = () => (
-  <Nav data={data} layout="wide" theme={theme2} animated={true} />
+  <Nav data={data} theme={theme2} layout="wide" animated={true} />
 );
 
 export const tallAnimated = () => (
-  <Nav data={data} layout="tall" theme={theme2} animated={true} />
+  <Nav data={data} theme={theme2} layout="tall" animated={true} />
 );

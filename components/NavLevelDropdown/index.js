@@ -111,7 +111,7 @@ ${/* If a theme is provided, these are the basic styles for the button */ ''}
           : theme.background[level % theme.background.length]
       };
       transition-property: color background-color;
-      transition-duration: 0.2s;
+      transition-duration: 0.5s;
       transition-timing-function: ease-out;
       &:hover {
         color: ${
@@ -183,7 +183,7 @@ const NavLevelDropdown = ({
   /* We also use the state to store the height of the previous level, which we can access thanks to the previousLevelRef we got as a prop */
   const [currentLevelHeight, setCurrentLevelHeight] = useState(0);
 
-  /* We create a reference to this current dropdown element, which we need for the handleOutsideClick function below*/
+  /* We create a reference to this current dropdown component, which we need for the handleOutsideClick function below*/
   const currentDropdownRef = useRef(null);
 
   /* We create a reference to the toggle button on this level, which we pass to the next level. Over there it will be passed to the RestartButton, which we put after the last element. Thanks to this button, focus is returned to the toggle button in this level, which the user can use to close the next level, or go through it again */
@@ -203,12 +203,12 @@ const NavLevelDropdown = ({
     }
   };
 
-  /* When the window is resized, we measure the current level height again, since it might change */
+  /* When the window is resized, we measure the current level height again, since it might change. */
   const handleResize = () => {
     setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
   };
 
-  /* When the user clicks outside the current level or any of it's children, these levels close. No need to add a keyboard equivalent using onBlur etc, because the RestartButton traps the focus in the current dropdown until the button is toggled to close it */
+  /* When the user clicks outside the current level or any of its children, these levels close. */
   const handleOutsideClick = event => {
     if (
       currentDropdownRef.current &&
@@ -216,6 +216,18 @@ const NavLevelDropdown = ({
     ) {
       setPressed(false);
     }
+  };
+
+  /* I had to add this function because when the screen reader is reading through, as it gets to the end of a sublevel it continues reading what comes after without closing the sublevel. The timeout is needed because right after an element loses focus, the active element is briefly the body of the document. */
+  const handleBlur = () => {
+    setTimeout(() => {
+      if (
+        currentDropdownRef.current &&
+        !currentDropdownRef.current.contains(document.activeElement)
+      ) {
+        setPressed(false);
+      }
+    }, 100);
   };
 
   /* Use this to add these event listeners on mount */
@@ -241,10 +253,14 @@ const NavLevelDropdown = ({
           ref={currentButtonRef}
           type="button"
           onClick={handleClick}
+          onBlur={handleBlur}
           onKeyPress={handleKeyPress}
           pressed={pressed}
           aria-pressed={pressed}
-          aria-label={pressed ? `Collapse ${data.text}` : `Expand ${data.text}`}
+          aria-expanded={pressed}
+          aria-label={
+            !pressed ? `Show ${data.text} submenu` : `Hide ${data.text} submenu`
+          }
         >
           <StyledI
             theme={theme}

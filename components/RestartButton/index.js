@@ -16,7 +16,12 @@ const RestartButton = ({ prevButtonRef }) => {
     prevButtonRef && prevButtonRef.current && prevButtonRef.current.focus();
   };
 
-  return <StyledButton onFocus={restartLevel} />;
+  return (
+    <StyledButton onFocus={restartLevel}>
+      Tab to hear this submenu from the beginning. Press Space to close this
+      submenu.
+    </StyledButton>
+  );
 };
 
 export default RestartButton;

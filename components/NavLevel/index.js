@@ -123,15 +123,9 @@ const NavLevel = ({
       prevLevelHeight={prevLevelHeight}
       expanded={expanded}
       ref={currentLevelRef}
-      role={level == 0 ? 'tree' : 'group'}
     >
       {data.map((item, index) => (
-        <StyledLi
-          theme={theme}
-          layout={layout}
-          key={item.id}
-          role={item.children ? 'treeitem' : 'none'}
-        >
+        <StyledLi theme={theme} layout={layout} key={item.id}>
           {item.children ? (
             <NavLevelDropdown
               data={item}
