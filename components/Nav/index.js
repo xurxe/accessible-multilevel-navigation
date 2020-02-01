@@ -6,7 +6,7 @@ import '../global.css';
 
 const StyledNav = styled.nav`
   ${
-    /* If a theme is provided, make the nav fixed and give it the stating background color */ ''
+    /* If a theme is provided, make the nav fixed and give it the starting background color */ ''
   }
   ${({ theme }) =>
     theme &&
@@ -16,6 +16,7 @@ const StyledNav = styled.nav`
       z-index: 100;
       background-color: ${theme.background[0]};
     `}
+
   ${
     /* If a theme is provided and the layout is wide, make nav extend all the way from left to right */ ''
   }
@@ -26,6 +27,7 @@ const StyledNav = styled.nav`
       left: 0;
       right: 0;
     `}
+
   ${
     /* If a theme is provided and the layout is tall, make nav extend all the way top to bottom, with a minimum width */ ''
   }
@@ -38,14 +40,15 @@ const StyledNav = styled.nav`
       min-width: 50vw;
       overflow-y: scroll;
     `}
+
   ${
     /* If a theme is provided and the layout is tall, style custom scroll bar */ ''
   }
   ${({ theme, layout }) =>
     theme &&
-    layout == 'tall' &&
     theme.background &&
     theme.accent &&
+    layout == 'tall' &&
     `
       &::-webkit-scrollbar {
         width: 0.25rem;
@@ -63,12 +66,16 @@ const StyledNav = styled.nav`
 
 const Nav = ({ data, theme, layout, animated }) => (
   <StyledNav theme={theme} layout={layout}>
+    {/* This script is here because putting it in .storybook/previow-head.html didn't work, even when I tried changing the path */}
+    <script src="/node_modules/focus-visible/dist/focus-visible.min.js"></script>
     <NavLevel
       data={data}
-      layout={layout}
       theme={theme}
+      layout={layout}
       animated={animated}
+      /* We need to keep track of the level to apply the proper styles down the line */
       level={0}
+      /* "Expanded" is necessary to make the first level display. To-do: add functionality so that the first level can be collapsed into a stand-alone button */
       expanded={true}
     />
   </StyledNav>

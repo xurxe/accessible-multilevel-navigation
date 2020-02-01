@@ -4,7 +4,7 @@ import data from '../../data/nav';
 import { theme1, theme2 } from '../theme';
 
 export default {
-  title: 'Animated nav',
+  title: 'Multilevel nav',
   parameters: {
     options: {
       showPanel: true,
@@ -12,13 +12,13 @@ export default {
   },
 };
 
-export const none = () => <Nav data={data} />;
+export const noTheme = () => <Nav data={data} />;
 
-export const wide = () => (
+export const wideSimple = () => (
   <Nav data={data} layout="wide" theme={theme1} animated={false} />
 );
 
-export const tall = () => (
+export const tallSimple = () => (
   <Nav data={data} layout="tall" theme={theme1} animated={false} />
 );
 

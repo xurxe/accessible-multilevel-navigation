@@ -10,12 +10,13 @@ const StyledButton = styled.button`
   clip: rect(1px, 1px, 1px, 1px);
 `;
 
+/* This component is rendered after the last interactive element on each level. When it receives focus, it immediatly switches focus to the toggle button in the previous level that expands/collapses the current level. */
 const RestartButton = ({ prevButtonRef }) => {
   const restartLevel = () => {
     prevButtonRef && prevButtonRef.current && prevButtonRef.current.focus();
   };
 
-  return <StyledButton onFocus={restartLevel}>Restart this level</StyledButton>;
+  return <StyledButton onFocus={restartLevel} />;
 };
 
 export default RestartButton;

@@ -6,6 +6,7 @@ import RestartButton from '../RestartButton';
 import '../global.css';
 
 const StyledDiv = styled.div`
+  ${/* If a theme is provided and the nav is not animated, this aligns the link and button properly */ ''}
   ${({ theme, animated }) =>
     theme &&
     theme.color &&
@@ -15,63 +16,91 @@ const StyledDiv = styled.div`
 `;
 
 const StyledButton = styled.button`
+${/* If a theme is provided, these are the basic styles for the button */ ''}
   ${({ theme }) =>
     theme &&
     theme.color &&
     `
     padding: 0;
     margin-left: 0.3em;
-    height: 1.2em;
-    width: 1.2em;
-    border: none;
+    height: 1.3em;
+    width: 1.3em;
     }
   `}
 
-  ${({ theme, level, animated }) =>
+  ${
+    /* If a theme is provided and the nav is not animated, the button has a simple change in text and/or background and/or border color*/ ''
+  }
+  ${({ theme, level, animated, pressed }) =>
     theme &&
     theme.color &&
     theme.background &&
     !animated &&
     `
-    border: 2px solid
+    color: ${
+      !pressed
+        ? theme.color[level % theme.color.length]
+        : theme.background[level % theme.background.length]
+    };
+    background-color: ${
+      !pressed
+        ? theme.background[level % theme.background.length]
+        : theme.color[level % theme.color.length]
+    };
+    border-width: 2px;
+    border-style: solid;
+    border-color:
       ${theme.background[level % theme.background.length]};
     &:hover, &:focus {
-      border: 2px solid
+      border-color:
         ${theme.color[level % theme.color.length]};
+      color: ${
+        !pressed
+          ? theme.color[level % theme.color.length]
+          : theme.background[level % theme.background.length]
+      };
+      background-color: ${
+        !pressed
+          ? theme.background[level % theme.background.length]
+          : theme.color[level % theme.color.length]
+      };
+    }
+    &:hover:focus {
+      border-color:
+        ${theme.color[level % theme.color.length]};
+      background-color: ${
+        !pressed
+          ? theme.color[level % theme.color.length]
+          : theme.background[level % theme.background.length]
+      };
+      color: ${
+        !pressed
+          ? theme.background[level % theme.background.length]
+          : theme.color[level % theme.color.length]
+      };
     }
   `}
-
-  ${({ theme, animated }) =>
-    theme &&
-    animated &&
-    `
-      border: none;
-      transition: 0.5s background-color ease-out;
-    `}
-
-  ${({ pressed, theme, level }) =>
-    theme &&
-    theme.color &&
-    theme.background &&
-    (!pressed
-      ? `
-          color: ${theme.color[level % theme.color.length]}};
-          background-color: ${
-            theme.background[level % theme.background.length]
-          };
-        `
-      : `
-          color: ${theme.background[level % theme.background.length]};
-          background-color: ${theme.color[level % theme.color.length]};
-        `)}
-
         
-  ${/* Adapted from hover.css */ ''}
+  ${
+    /* If a theme is provided and the nav is not animated, I used some code adapted from hover.css */ ''
+  }
   ${({ theme, level, pressed, animated }) =>
+    theme &&
     theme.accent &&
     theme.color &&
     animated &&
     `
+      color: ${
+        !pressed
+          ? theme.color[level % theme.color.length]
+          : theme.background[level % theme.background.length]
+      };
+      background-color: ${
+        !pressed
+          ? theme.background[level % theme.background.length]
+          : theme.color[level % theme.color.length]
+      };
+      border: none;
       display: inline-block;
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
@@ -81,9 +110,9 @@ const StyledButton = styled.button`
           ? theme.color[level % theme.color.length]
           : theme.background[level % theme.background.length]
       };
-      transition-property: color background;
+      transition-property: color background-color;
       transition-duration: 0.2s;
-
+      transition-timing-function: ease-out;
       &:hover {
         color: ${
           !pressed
@@ -96,7 +125,6 @@ const StyledButton = styled.button`
             : theme.background[level % theme.background.length]
         };
       }
-
       &:focus {
         color: ${theme.background[level % theme.background.length]};
         background-color: ${theme.color[level % theme.color.length]};
@@ -130,8 +158,10 @@ const StyledButton = styled.button`
 `;
 
 const StyledI = styled.i`
+  ${/* If a theme, these are the basic styles for the icon */ ''}
   ${({ theme }) =>
     theme &&
+    theme.color &&
     `
       font-size: 0.5em;
       display: block;
@@ -144,29 +174,55 @@ const NavDropdown = ({
   theme,
   animated,
   level,
-  previousLevelRef,
+  currentLevelRef,
   prevButtonRef,
 }) => {
+  /* We use the state to store whether the button has been pressed or not. The pressed prop has several functions, and it's: 1) passed to styled components for styling purposes: 2) used to set aria-pressed on the button; 3) used to toggle the aria-label for the button; 4) used to toggle aria-expanded for the next level; 5) passed to the next level to toggle visibility in the styles over there*/
   const [pressed, setPressed] = useState(false);
-  const [prevLevelHeight, setPrevLevelHeight] = useState(0);
+
+  /* We also use the state to store the height of the previous level, which we can access thanks to the previousLevelRef we got as a prop */
+  const [currentLevelHeight, setCurrentLevelHeight] = useState(0);
+
+  /* We create a reference to this current dropdown element, which we need for the handleOutsideClick function below*/
+  const currentDropdownRef = useRef(null);
+
+  /* We create a reference to the toggle button on this level, which we pass to the next level. Over there it will be passed to the RestartButton, which we put after the last element. Thanks to this button, focus is returned to the toggle button in this level, which the user can use to close the next level, or go through it again */
+  const currentButtonRef = useRef(null);
+
+  /* When the button is clicked, the pressed state is toggled, and we get the height of the current level, which we pass to the next level to position it correctly*/
   const handleClick = () => {
     setPressed(!pressed);
-    setPrevLevelHeight(previousLevelRef.current.offsetHeight);
+    setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
   };
-  const currentDropdownRef = useRef(null);
-  const currentButtonRef = useRef(null);
-  useEffect(() => {
-    document.addEventListener('click', handleOutsideClick);
-  }, []);
 
-  const handleOutsideClick = e => {
+  /* I put this function here because adding the onClick function makes the button work with Space and Enter, but I'm not sure yet if that's a Storybook-specific thing or what */
+  const handleKeyPress = event => {
+    if (event.key === 32) {
+      setPressed(!pressed);
+      setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
+    }
+  };
+
+  /* When the window is resized, we measure the current level height again, since it might change */
+  const handleResize = () => {
+    setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
+  };
+
+  /* When the user clicks outside the current level or any of it's children, these levels close. No need to add a keyboard equivalent using onBlur etc, because the RestartButton traps the focus in the current dropdown until the button is toggled to close it */
+  const handleOutsideClick = event => {
     if (
       currentDropdownRef.current &&
-      !currentDropdownRef.current.contains(e.target)
+      !currentDropdownRef.current.contains(event.target)
     ) {
       setPressed(false);
     }
   };
+
+  /* Use this to add these event listeners on mount */
+  useEffect(() => {
+    document.addEventListener('click', handleOutsideClick);
+    window.addEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div ref={currentDropdownRef}>
@@ -185,6 +241,7 @@ const NavDropdown = ({
           ref={currentButtonRef}
           type="button"
           onClick={handleClick}
+          onKeyPress={handleKeyPress}
           pressed={pressed}
           aria-pressed={pressed}
           aria-label={pressed ? `Collapse ${data.text}` : `Expand ${data.text}`}
@@ -210,8 +267,9 @@ const NavDropdown = ({
         layout={layout}
         animated={animated}
         expanded={pressed}
+        aria-expanded={pressed}
         level={level + 1}
-        prevLevelHeight={prevLevelHeight}
+        prevLevelHeight={currentLevelHeight}
         prevButtonRef={currentButtonRef}
       />
     </div>

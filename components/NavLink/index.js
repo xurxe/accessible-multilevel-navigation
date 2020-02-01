@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import '../global.css';
 
 const StyledA = styled.a`
+  ${/* If there's a theme, apply basic styles to the links */ ''}
   ${({ theme, level }) =>
     theme &&
     theme.color &&
     theme.accent &&
     `
       color: ${theme.color[level % theme.color.length]};
-      &:hover {
-        text-decoration: none;
-      }
       &:active {
         color: ${theme.accent[level % theme.accent.length]};
       }
     `}
-
+  ${
+    /* Since the default is dark text on light background, when we do the reverse, many browsers render the text too thick. We apply these styles in the case of positive polarity (light text on dark background), as calculated with some functions later in this file */ ''
+  }
   ${({ polarity }) =>
     polarity &&
     `
@@ -27,13 +27,31 @@ const StyledA = styled.a`
       -o-font-smoothing: antialiased;
     `}
 
-  ${/* Adapted from hover.css */ ''}
+  ${/* When there's a theme but no animation, use these styles. */ ''}
+  ${({ theme, animated }) =>
+    theme &&
+    theme.color &&
+    !animated &&
+    `
+    text-decoration: none; 
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
+    `}
+
+  ${
+    /* When there's a theme and animation, use these styles (dapted from hover.css) */ ''
+  }
   ${({ theme, level, animated }) =>
     theme &&
     theme.color &&
     theme.accent &&
     animated &&
     `
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
       vertical-align: middle;
       transform: perspective(1px) translateZ(0);
       position: relative;
@@ -89,37 +107,38 @@ const StyledA = styled.a`
     `}
 `;
 
+/* This function is used to get the luminance of a hex color */
+const getLuminance = hexcode => {
+  // two digits for each (R, G, B)
+  const rawR = hexcode.slice(1, 3);
+  const rawG = hexcode.slice(3, 5);
+  const rawB = hexcode.slice(5, 7);
+
+  // convert to integer (0-255)
+  const R = parseInt(rawR, 16);
+  const G = parseInt(rawG, 16);
+  const B = parseInt(rawB, 16);
+
+  // get max and min from RGB values
+  const rawMax = Math.max(R, G, B);
+  const rawMin = Math.min(R, G, B);
+
+  // convert to 0-1 range
+  const max = rawMax / 255;
+  const min = rawMin / 255;
+
+  return (max + min) / 2;
+};
+
+/* This function is used to get the polarity of a foreground/background color combination. It returns true for positive polarity (light foreground on dark background), false otherwise*/
+const getPolarity = (hexForeground, hexBackground) => {
+  const luminanceForeground = getLuminance(hexForeground);
+  const luminanceBackground = getLuminance(hexBackground);
+  return luminanceForeground > luminanceBackground ? true : false;
+};
+
 const NavLink = ({ data, theme, animated, level }) => {
-  const getLuminance = hexcode => {
-    // two digits for each (R, G, B)
-    const rawR = hexcode.slice(1, 3);
-    const rawG = hexcode.slice(3, 5);
-    const rawB = hexcode.slice(5, 7);
-
-    // convert to integer (0-255)
-    const R = parseInt(rawR, 16);
-    const G = parseInt(rawG, 16);
-    const B = parseInt(rawB, 16);
-
-    // get max and min from RGB values
-    const rawMax = Math.max(R, G, B);
-    const rawMin = Math.min(R, G, B);
-
-    // convert to 0-1 range
-    const max = rawMax / 255;
-    const min = rawMin / 255;
-
-    return (max + min) / 2;
-  };
-
-  // returns true for light foreground on dark background, false otherwise
-  const getPolarity = (hexForeground, hexBackground) => {
-    const luminanceForeground = getLuminance(hexForeground);
-    const luminanceBackground = getLuminance(hexBackground);
-    return luminanceForeground > luminanceBackground ? true : false;
-  };
-
-  // returns true if there's a theme and light foreground on dark background, false otherwise
+  /* This function returns true if there's a theme with light foreground on dark background, false otherwise */
   const getThemePolarity = (theme, level) => {
     if (theme && theme.color && theme.background) {
       return getPolarity(
