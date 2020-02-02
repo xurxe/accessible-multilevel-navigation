@@ -1,6 +1,6 @@
 # Accessible multilevel navigation
 
-Multilevel navigation menus are tricky to make, and there's many pitfalls that can make them very difficult or impossible to use for many people with disabilities.
+Multilevel navigation menus are tricky to make, and there's many pitfalls that can make them very difficult or impossible to use for many people with disabilities. Here's my take on it!
 
 ## Demo
 
@@ -52,10 +52,10 @@ The `NavLevelDropdown` component renders a `NavLink` component, and a toggle but
 
 The `NavLink` component is just a good old link.
 
-Finally, there's the `RestartButton` component. It's rendered after the last item on that level; it's invisible to the eyes, and will go unnoticed to many users (read more about it in the next section).
+Finally, there's the `RestartButton` component. It's rendered after the last item on that level; it's invisible to the eyes, and will go unnoticed to many users:
 
-- When someone is using a keyboard or keyboard-emulating technology, focus on this button will redirect them straight away focus to the button that toggles the visibility of that level
-- When someone is using a screen reader, and the reader is just allowed to keep reading on its own (as opposed to the user using the keyboard to tab through focusable items), the screen reader will announce the following instructions: "Tab to hear this submenu from the beginning. Press Space to close this submenu.". If the user does nothing, the screen reader will leave the submenu and continue reading the next items on the `Nav`.
+- When someone is using a keyboard or keyboard-emulating technology, focus on this button will redirect focus straight away  to the button that toggles the visibility of that level
+- When someone is using a screen reader, and the reader is just allowed to keep reading on its own (as opposed to the user using the keyboard to tab through focusable items), the screen reader will announce the following instructions: "Tab to hear this submenu from the beginning. Press Space to close this submenu.". If the user does nothing, the screen reader will leave the submenu, close it, and continue reading the next items on the `Nav`.
 
 ### Accessibility features
 
