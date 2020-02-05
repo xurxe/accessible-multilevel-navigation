@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import 'focus-visible';
 import NavLevel from '../NavLevel';

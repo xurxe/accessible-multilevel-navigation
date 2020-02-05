@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import '../global.css';
 
 const StyledA = styled.a`
-  ${/* If there's a theme, apply basic styles to the links */ ''}
+  ${/* If there's a theme, apply basic styles to the links: */ ''}
   ${({ theme, level }) =>
     theme &&
     theme.color &&
@@ -15,7 +15,7 @@ const StyledA = styled.a`
       }
     `}
   ${
-    /* Since the default is dark text on light background, when we do the reverse, many browsers render the text too thick. We apply these styles in the case of positive polarity (light text on dark background), as calculated with some functions later in this file */ ''
+    /* Since the default is dark text on light background, when we do the reverse, many browsers render the text too thick. We apply these styles in the case of positive polarity (light text on dark background), as calculated with some functions later in this file: */ ''
   }
   ${({ polarity }) =>
     polarity &&
@@ -27,7 +27,7 @@ const StyledA = styled.a`
       -o-font-smoothing: antialiased;
     `}
 
-  ${/* When there's a theme but no animation, use these styles. */ ''}
+  ${/* When there's a theme but no animation, use these styles: */ ''}
   ${({ theme, animated }) =>
     theme &&
     theme.color &&
@@ -40,7 +40,7 @@ const StyledA = styled.a`
     `}
 
   ${
-    /* When there's a theme and animation, use these styles (dapted from hover.css) */ ''
+    /* When there's a theme and animation, use these styles (adapted from hover.css): */ ''
   }
   ${({ theme, level, animated }) =>
     theme &&
@@ -107,7 +107,7 @@ const StyledA = styled.a`
     `}
 `;
 
-/* This function is used to get the luminance of a hex color */
+/* This function is used to get the luminance of a hex color: */
 const getLuminance = hexcode => {
   // two digits for each (R, G, B)
   const rawR = hexcode.slice(1, 3);
@@ -130,7 +130,7 @@ const getLuminance = hexcode => {
   return (max + min) / 2;
 };
 
-/* This function is used to get the polarity of a foreground/background color combination. It returns true for positive polarity (light foreground on dark background), false otherwise*/
+/* This function is used to get the polarity of a foreground/background color combination. It returns true for positive polarity (light foreground on dark background), false otherwise: */
 const getPolarity = (hexForeground, hexBackground) => {
   const luminanceForeground = getLuminance(hexForeground);
   const luminanceBackground = getLuminance(hexBackground);
@@ -139,7 +139,8 @@ const getPolarity = (hexForeground, hexBackground) => {
 
 const NavLink = forwardRef((props, currentLinkRef) => {
   const { data, theme, animated, level, ...rest } = props;
-  /* This function returns true if there's a theme with light foreground on dark background, false otherwise */
+
+  /* This function returns true if there's a theme with light foreground on dark background, false otherwise: */
   const getThemePolarity = (theme, level) => {
     if (theme && theme.color && theme.background) {
       return getPolarity(

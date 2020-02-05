@@ -1,6 +1,6 @@
 import React from 'react';
 
-/* This component is rendered after the last interactive element on each level. When it receives focus, it immediatly switches focus to the toggle button in the previous level that expands/collapses the current level. */
+/* This component is rendered after the last interactive element on each level. When it receives focus, it immediatly switches focus to the toggle button in the previous level that expands/collapses the current level: */
 const RestartButton = ({ prevButtonRef }) => {
   const restartLevel = () => {
     prevButtonRef && prevButtonRef.current && prevButtonRef.current.focus();

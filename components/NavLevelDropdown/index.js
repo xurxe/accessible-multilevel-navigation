@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import NavLevel from '../NavLevel';
 import NavLink from '../NavLink';
-import RestartButton from '../RestartButton';
 import '../global.css';
 
 const StyledDiv = styled.div`
@@ -222,13 +221,13 @@ const NavLevelDropdown = props => {
     }
   };
 
-  /* TODO: refactor and comment */
+  /* This funtion is necessary for two reasons: 1) when the button is focused and the user tabs backwards to the previous focusable element (which is the link right before it), we need to close the submenu. And 2) when the screen reader is reading through (as oppossed to the user tabbing or otherwise controling the reading pointer directly), we need to close the menu as it switches focus to an element outside the current dropdown */
   const handleBlur = () => {
     setTimeout(() => {
       if (
+        currentLinkRef.current.contains(document.activeElement) ||
         (currentDropdownRef.current &&
-          !currentDropdownRef.current.contains(document.activeElement)) ||
-        currentLinkRef.current.contains(document.activeElement)
+          !currentDropdownRef.current.contains(document.activeElement))
       ) {
         setPressed(false);
       }
