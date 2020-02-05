@@ -1,14 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const StyledButton = styled.button`
-  position: absolute !important;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
-`;
 
 /* This component is rendered after the last interactive element on each level. When it receives focus, it immediatly switches focus to the toggle button in the previous level that expands/collapses the current level. */
 const RestartButton = ({ prevButtonRef }) => {
@@ -17,10 +7,10 @@ const RestartButton = ({ prevButtonRef }) => {
   };
 
   return (
-    <StyledButton onFocus={restartLevel}>
-      Tab to hear this submenu from the beginning. Press Space to close this
-      submenu.
-    </StyledButton>
+    <button onFocus={restartLevel} className="visually-hidden">
+      To hear this submenu from the beginning, press Tab or the equivalent key
+      sequence for your browser.
+    </button>
   );
 };
 

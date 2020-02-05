@@ -101,19 +101,21 @@ const StyledLi = styled.li`
     `}
 `;
 
-const NavLevel = ({
-  data,
-  theme,
-  layout,
-  animated,
-  level,
-  prevLevelHeight,
-  expanded,
-  prevButtonRef,
-}) => {
+const NavLevel = props => {
+  const {
+    data,
+    theme,
+    layout,
+    animated,
+    level,
+    prevLevelHeight,
+    expanded,
+    prevButtonRef,
+    ...rest
+  } = props;
+  /* This reference gets passed to the dropdowns in this level, which have toggle buttons to render the next level. The reference to this level is used to find its height, which is needed to render the next level in the appropriate way on wide layouts */
   const currentLevelRef = useRef(null);
-  {
-  }
+
   return (
     <StyledUl
       theme={theme}
@@ -123,10 +125,12 @@ const NavLevel = ({
       prevLevelHeight={prevLevelHeight}
       expanded={expanded}
       ref={currentLevelRef}
+      {...rest}
     >
-      {data.map((item, index) => (
-        <StyledLi theme={theme} layout={layout} key={item.id}>
+      {data.map(item => (
+        <StyledLi theme={theme} layout={layout} key={item.id} {...rest}>
           {item.children ? (
+            /* If the item has children, we get a dropdown (link plus button to expand/collapse next level): */
             <NavLevelDropdown
               data={item}
               theme={theme}
@@ -134,23 +138,21 @@ const NavLevel = ({
               animated={animated}
               level={level}
               currentLevelRef={currentLevelRef}
-              prevButtonRef={index == data.length - 1 && prevButtonRef}
+              {...rest}
             />
           ) : (
-            <>
-              <NavLink
-                data={item}
-                theme={theme}
-                animated={animated}
-                level={level}
-              />
-              {index === data.length - 1 && (
-                <RestartButton prevButtonRef={prevButtonRef} />
-              )}
-            </>
+            /* Otherwise, it's just a good old link: */
+            <NavLink
+              data={item}
+              theme={theme}
+              animated={animated}
+              level={level}
+              {...rest}
+            />
           )}
         </StyledLi>
       ))}
+      {level > 0 && <RestartButton prevButtonRef={prevButtonRef} {...rest} />}
     </StyledUl>
   );
 };

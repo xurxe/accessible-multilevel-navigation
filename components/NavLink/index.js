@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import '../global.css';
 
@@ -137,7 +137,8 @@ const getPolarity = (hexForeground, hexBackground) => {
   return luminanceForeground > luminanceBackground ? true : false;
 };
 
-const NavLink = ({ data, theme, animated, level }) => {
+const NavLink = forwardRef((props, currentLinkRef) => {
+  const { data, theme, animated, level, ...rest } = props;
   /* This function returns true if there's a theme with light foreground on dark background, false otherwise */
   const getThemePolarity = (theme, level) => {
     if (theme && theme.color && theme.background) {
@@ -158,10 +159,12 @@ const NavLink = ({ data, theme, animated, level }) => {
       animated={animated}
       level={level}
       polarity={polarity}
+      ref={currentLinkRef}
+      {...rest}
     >
       {data.text}
     </StyledA>
   );
-};
+});
 
 export default NavLink;

@@ -168,34 +168,38 @@ const StyledI = styled.i`
     `}
 `;
 
-const NavLevelDropdown = ({
-  data,
-  layout,
-  theme,
-  animated,
-  level,
-  currentLevelRef,
-  prevButtonRef,
-}) => {
-  /* We use the state to store whether the button has been pressed or not. The pressed prop has several functions, and it's: 1) passed to styled components for styling purposes: 2) used to set aria-pressed on the button; 3) used to toggle the aria-label for the button; 4) used to toggle aria-expanded for the next level; 5) passed to the next level to toggle visibility in the styles over there*/
+const NavLevelDropdown = props => {
+  const {
+    data,
+    layout,
+    theme,
+    animated,
+    level,
+    currentLevelRef,
+    ...rest
+  } = props;
+  /* We use the state to store whether the button has been pressed or not. The pressed prop has several functions, and it's: 1) passed to styled components for styling purposes: 2) used to set aria-pressed on the button; 3) used to toggle the aria-label for the button; 4) used to toggle aria-expanded for the next level; 5) passed to the next level to toggle visibility in the styles over there: */
   const [pressed, setPressed] = useState(false);
 
-  /* We also use the state to store the height of the previous level, which we can access thanks to the previousLevelRef we got as a prop */
+  /* We also use the state to store the height of the previous level, which we can access thanks to the previousLevelRef we got as a prop: */
   const [currentLevelHeight, setCurrentLevelHeight] = useState(0);
 
-  /* We create a reference to this current dropdown component, which we need for the handleOutsideClick function below*/
+  /* We create a reference to this current dropdown component, which we need for the handleOutsideClick and handleBlur functions below: */
   const currentDropdownRef = useRef(null);
 
-  /* We create a reference to the toggle button on this level, which we pass to the next level. Over there it will be passed to the RestartButton, which we put after the last element. Thanks to this button, focus is returned to the toggle button in this level, which the user can use to close the next level, or go through it again */
+  /* We create a reference to the link in this current dropdown component, which we need for the handleBlur function below: */
+  const currentLinkRef = useRef(null);
+
+  /* We create a reference to the toggle button on this level, which we pass to the next level. Over there it will be passed to the RestartButton, which we put after the last element. Thanks to this button, focus is returned to the toggle button in this level, which the user can use to close the next level, or go through it again: */
   const currentButtonRef = useRef(null);
 
-  /* When the button is clicked, the pressed state is toggled, and we get the height of the current level, which we pass to the next level to position it correctly*/
+  /* When the button is clicked, the pressed state is toggled, and we get the height of the current level, which we pass to the next level to position it correctly: */
   const handleClick = () => {
     setPressed(!pressed);
     setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
   };
 
-  /* I put this function here because adding the onClick function makes the button work with Space and Enter, but I'm not sure yet if that's a Storybook-specific thing or what */
+  /* I put this function here because adding the onClick function makes the button work with Space and Enter, but I'm not sure yet if that's a Storybook-specific thing or what: */
   const handleKeyPress = event => {
     if (event.key === 32) {
       setPressed(!pressed);
@@ -203,12 +207,12 @@ const NavLevelDropdown = ({
     }
   };
 
-  /* When the window is resized, we measure the current level height again, since it might change. */
+  /* When the window is resized, we measure the current level height again, since it might change: */
   const handleResize = () => {
     setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
   };
 
-  /* When the user clicks outside the current level or any of its children, these levels close. */
+  /* When the user clicks outside the current level or any of its children, these levels close: */
   const handleOutsideClick = event => {
     if (
       currentDropdownRef.current &&
@@ -218,19 +222,20 @@ const NavLevelDropdown = ({
     }
   };
 
-  /* I had to add this function because when the screen reader is reading through, as it gets to the end of a sublevel it continues reading what comes after without closing the sublevel. The timeout is needed because right after an element loses focus, the active element is briefly the body of the document. */
+  /* TODO: refactor and comment */
   const handleBlur = () => {
     setTimeout(() => {
       if (
-        currentDropdownRef.current &&
-        !currentDropdownRef.current.contains(document.activeElement)
+        (currentDropdownRef.current &&
+          !currentDropdownRef.current.contains(document.activeElement)) ||
+        currentLinkRef.current.contains(document.activeElement)
       ) {
         setPressed(false);
       }
     }, 100);
   };
 
-  /* Use this to add these event listeners on mount */
+  /* Use this to add these event listeners on mount: */
   useEffect(() => {
     document.addEventListener('click', handleOutsideClick);
     window.addEventListener('resize', handleResize);
@@ -245,6 +250,8 @@ const NavLevelDropdown = ({
           theme={theme}
           animated={animated}
           level={level}
+          ref={currentLinkRef}
+          {...rest}
         />
         <StyledButton
           theme={theme}
@@ -258,9 +265,8 @@ const NavLevelDropdown = ({
           pressed={pressed}
           aria-pressed={pressed}
           aria-expanded={pressed}
-          aria-label={
-            !pressed ? `Show ${data.text} submenu` : `Hide ${data.text} submenu`
-          }
+          aria-labelledby={data.id}
+          {...rest}
         >
           <StyledI
             theme={theme}
@@ -268,14 +274,15 @@ const NavLevelDropdown = ({
             className={pressed ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
             pressed={pressed}
             aria-hidden={true}
+            {...rest}
           ></StyledI>
+          <span id={data.id} className="visually-hidden">
+            {!pressed
+              ? `Show ${data.text} submenu`
+              : `Hide ${data.text} submenu`}
+          </span>
         </StyledButton>
       </StyledDiv>
-      {prevButtonRef && !pressed && (
-        <RestartButton prevButtonRef={prevButtonRef}>
-          Restart this level
-        </RestartButton>
-      )}
 
       <NavLevel
         data={data.children}
