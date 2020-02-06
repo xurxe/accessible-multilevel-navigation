@@ -10,6 +10,11 @@ const StyledA = styled.a`
     theme.accent &&
     `
       color: ${theme.color[level % theme.color.length]};
+      display: inline-block;
+      min-height: 44px;
+      min-width: 44px;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
       &:active {
         color: ${theme.accent[level % theme.accent.length]};
       }
@@ -56,7 +61,6 @@ const StyledA = styled.a`
       transform: perspective(1px) translateZ(0);
       position: relative;
       overflow: hidden;
-      padding-bottom: 0.2em;
       text-decoration: none;
 
       &:before {
@@ -72,14 +76,16 @@ const StyledA = styled.a`
         transition-timing-function: ease-out;
       }
 
-      &:hover:after {
-        height: 2px;
+      &:focus:before {
+        height: 3px;
         left: 0;
         right: 0;
       }
 
-      &:active:before {
-        background: ${theme.accent[level % theme.accent.length]};
+      &:hover:after {
+        height: 3px;
+        left: 0;
+        right: 0;
       }
 
       &:after {
@@ -88,19 +94,14 @@ const StyledA = styled.a`
         z-index: -1;
         left: 51%;
         right: 51%;
-        top: -0.1em;
+        top: 0;
         background: ${theme.color[level % theme.color.length]};
         transition-property: left, right;
         transition-duration: 0.3s;
         transition-timing-function: ease-out;
       }
 
-      &:focus:before {
-        height: 2px;
-        left: 0;
-        right: 0;
-      }
-
+      &:active:before, 
       &:active:after {
         background: ${theme.accent[level % theme.accent.length]};
       }
@@ -138,7 +139,7 @@ const getPolarity = (hexForeground, hexBackground) => {
 };
 
 const NavLink = forwardRef((props, currentLinkRef) => {
-  const { data, theme, animated, level, ...rest } = props;
+  const { data, theme, layout, animated, level, ...rest } = props;
 
   /* This function returns true if there's a theme with light foreground on dark background, false otherwise: */
   const getThemePolarity = (theme, level) => {

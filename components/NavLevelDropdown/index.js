@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
     theme.color &&
     !animated &&
     `display: flex;
-    align-items: center;`}
+    align-items: baseline;`}
 `;
 
 const StyledButton = styled.button`
@@ -22,8 +22,8 @@ ${/* If a theme is provided, these are the basic styles for the button */ ''}
     `
     padding: 0;
     margin-left: 0.3em;
-    height: 1.3em;
-    width: 1.3em;
+    min-height: 44px;
+    min-width: 44px;
     }
   `}
 
@@ -46,7 +46,7 @@ ${/* If a theme is provided, these are the basic styles for the button */ ''}
         ? theme.background[level % theme.background.length]
         : theme.color[level % theme.color.length]
     };
-    border-width: 2px;
+    border-width: 3px;
     border-style: solid;
     border-color:
       ${theme.background[level % theme.background.length]};
@@ -133,12 +133,12 @@ ${/* If a theme is provided, these are the basic styles for the button */ ''}
         content: '';
         position: absolute;
         z-index: -1;
-        left: 2px;
-        right: 2px;
-        top: 2px;
-        bottom: 2px;
+        left: 3px;
+        right: 3px;
+        top: 3px;
+        bottom: 3px;
         border-style: solid;
-        border-width: 2.5px;
+        border-width: 4px;
         border-color: ${theme.background[level % theme.background.length]};
         opacity: 0;
         transition-property: opacity boder-color;
@@ -156,13 +156,13 @@ ${/* If a theme is provided, these are the basic styles for the button */ ''}
     `}
 `;
 
-const StyledI = styled.i`
+const StyledFontAwesome = styled.span`
   ${/* If a theme, these are the basic styles for the icon */ ''}
   ${({ theme }) =>
     theme &&
     theme.color &&
     `
-      font-size: 0.5em;
+      font-size: 0.8em;
       display: block;
     `}
 `;
@@ -262,19 +262,18 @@ const NavLevelDropdown = props => {
           onBlur={handleBlur}
           onKeyPress={handleKeyPress}
           pressed={pressed}
-          aria-pressed={pressed}
           aria-expanded={pressed}
           aria-labelledby={data.id}
           {...rest}
         >
-          <StyledI
+          <StyledFontAwesome
             theme={theme}
             level={level}
             className={pressed ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
             pressed={pressed}
             aria-hidden={true}
             {...rest}
-          ></StyledI>
+          ></StyledFontAwesome>
           <span id={data.id} className="visually-hidden">
             {!pressed
               ? `Show ${data.text} submenu`

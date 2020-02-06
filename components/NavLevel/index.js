@@ -16,6 +16,7 @@ const StyledUl = styled.ul`
     `
       display: flex;
       flex-direction: ${layout === 'wide' ? 'row' : 'column'};
+      align-items: ${layout === 'wide' ? 'flex-end' : 'flex-start'};
       margin: 0;
       background-color: ${theme.background[level % theme.background.length]};
     `}
@@ -54,7 +55,7 @@ const StyledUl = styled.ul`
       `
       flex-direction: column;
       height: 100%;
-      padding: 0.5em 1em;
+      padding: 1em;
       margin-top: 0.5em;
     `}
 
@@ -71,7 +72,7 @@ const StyledUl = styled.ul`
       right: 0;
       top: ${prevLevelHeight - 2}px;
       left: 0;
-      padding: 0.75em 1.5em;
+      padding: 1em 1.5em;
     `}
 
   ${
@@ -95,9 +96,9 @@ const StyledLi = styled.li`
     layout &&
     `
       list-style: none;
-      padding-top: 0.25em;
-      padding-bottom: 0.25em;
       padding-right: ${layout == 'wide' ? '1.5em' : '0'};
+      padding-bottom: ${layout == 'tall' ? '0.5em' : '0'};
+
     `}
 `;
 
@@ -145,6 +146,7 @@ const NavLevel = props => {
             <NavLink
               data={item}
               theme={theme}
+              layout={layout}
               animated={animated}
               level={level}
               {...rest}
