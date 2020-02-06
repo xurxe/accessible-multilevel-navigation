@@ -9,7 +9,7 @@ const RestartButton = ({ prevButtonRef }) => {
   return (
     <button onFocus={restartLevel} className="visually-hidden">
       To hear this submenu from the beginning, press Tab or the equivalent key
-      sequence for your browser.
+      sequence for your browser. To close this submenu, activate the button.
     </button>
   );
 };

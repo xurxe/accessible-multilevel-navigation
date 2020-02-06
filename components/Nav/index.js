@@ -68,7 +68,7 @@ const Nav = props => {
   const { data, theme, layout, animated, ...rest } = props;
 
   return (
-    <StyledNav theme={theme} layout={layout}>
+    <StyledNav theme={theme} layout={layout} {...rest}>
       {/* This script is here because putting it in .storybook/previow-head.html didn't work, even when I tried changing the path: */}
       <script src="/node_modules/focus-visible/dist/focus-visible.min.js"></script>
       <NavLevel

@@ -177,7 +177,7 @@ const NavLevelDropdown = props => {
     currentLevelRef,
     ...rest
   } = props;
-  /* We use the state to store whether the button has been pressed or not. The pressed prop has several functions, and it's: 1) passed to styled components for styling purposes: 2) used to set aria-pressed on the button; 3) used to toggle the aria-label for the button; 4) used to toggle aria-expanded for the next level; 5) passed to the next level to toggle visibility in the styles over there: */
+  /* We use the state to store whether the button has been pressed or not. The pressed prop has several functions, and it's: 1) passed to styled components for styling purposes; 2) used to toggle the accessible name for the current button; 3) used to toggle aria-expanded for the next level; 4) passed to the next level to toggle visibility in the styles over there: */
   const [pressed, setPressed] = useState(false);
 
   /* We also use the state to store the height of the previous level, which we can access thanks to the previousLevelRef we got as a prop: */
@@ -292,6 +292,7 @@ const NavLevelDropdown = props => {
         level={level + 1}
         prevLevelHeight={currentLevelHeight}
         prevButtonRef={currentButtonRef}
+        {...rest}
       />
     </div>
   );
