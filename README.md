@@ -54,7 +54,7 @@ The `NavLink` component is just a good old link.
 
 Finally, there's the `RestartButton` component. It's rendered after the last item on that level; it's invisible to the eyes, and will go unnoticed to many users:
 
-- When someone is using a keyboard or keyboard-emulating technology, focus on this button will redirect focus straight away  to the button that toggles the visibility of that level
+- When someone is using a keyboard or keyboard-emulating technology, focus on this button will redirect focus straight away to the button that toggles the visibility of that level
 - When someone is using a screen reader, and the reader is just allowed to keep reading on its own (as opposed to the user using the keyboard to tab through focusable items), the screen reader will announce the following instructions: "Tab to hear this submenu from the beginning. Press Space to close this submenu.". If the user does nothing, the screen reader will leave the submenu, close it, and continue reading the next items on the `Nav`.
 
 ### Accessibility features
@@ -66,9 +66,8 @@ Finally, there's the `RestartButton` component. It's rendered after the last ite
   - Each item in a level is an `<li>` element
   - `<a>` elements take you somewhere, `<button>` elements do something
 - Toggle buttons (in `NavLevelDropdown`):
-  - Are identified as toggle buttons with `aria-pressed`
   - Are identified as toggling expand/collapse state with `aria-expanded`
-  - Since they're icons only, they have a suitable `aria-label` as a text alternative ("Show [name] submenu" or "Open [name] submenu")
+  - Since they're icons only, they have a suitable text alternative available to screen readers ("Show [name] submenu" or "Hide [name] submenu")
   - Icons in buttons are `aria-hidden`
 - Focus visible:
   - Uses `focus-visible` polyfill to show default browser focus highlights only when user is navigating with a keyboard or similar technology
@@ -111,9 +110,15 @@ With `level % theme.background.length` we find out which index of the array we s
 
   - `layout="wide"` gives a horizontal menu
   - `layout="tall"` gives a vertical menu
-  - `layout="auto"` is responsive to viewport width (ok, not actually implemented yet, but coming soon)
 
 - `animated={true | false}` lets you choose if you want animations or not
+
+## To-do
+
+- Add `layout="auto"` and make it responsive to viewport width
+- Add capability to collapse the whole menu into a fixed button
+- Improve animations
+- Add Esc key event listener
 
 ## Technologies and tools
 
