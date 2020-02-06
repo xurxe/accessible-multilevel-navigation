@@ -114,6 +114,7 @@ const NavLevel = props => {
     prevButtonRef,
     ...rest
   } = props;
+
   /* This reference gets passed to the dropdowns in this level, which have toggle buttons to render the next level. The reference to this level is used to find its height, which is needed to render the next level in the appropriate way on wide layouts */
   const currentLevelRef = useRef(null);
 

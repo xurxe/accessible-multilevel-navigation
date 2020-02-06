@@ -195,25 +195,32 @@ const NavLevelDropdown = props => {
   /* When the button is clicked, the pressed state is toggled, and we get the height of the current level, which we pass to the next level to position it correctly: */
   const handleClick = () => {
     setPressed(!pressed);
-    setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
+    currentLevelRef &&
+      currentLevelRef.current &&
+      setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
   };
 
   /* I put this function here because adding the onClick function makes the button work with Space and Enter, but I'm not sure yet if that's a Storybook-specific thing or what: */
   const handleKeyPress = event => {
     if (event.key === 32) {
       setPressed(!pressed);
-      setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
+      currentLevelRef &&
+        currentLevelRef.current &&
+        setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
     }
   };
 
   /* When the window is resized, we measure the current level height again, since it might change: */
   const handleResize = () => {
-    setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
+    currentLevelRef &&
+      currentLevelRef.current &&
+      setCurrentLevelHeight(currentLevelRef.current.offsetHeight);
   };
 
   /* When the user clicks outside the current level or any of its children, these levels close: */
   const handleOutsideClick = event => {
     if (
+      currentLevelRef &&
       currentDropdownRef.current &&
       !currentDropdownRef.current.contains(event.target)
     ) {
@@ -225,8 +232,11 @@ const NavLevelDropdown = props => {
   const handleBlur = () => {
     setTimeout(() => {
       if (
-        currentLinkRef.current.contains(document.activeElement) ||
-        (currentDropdownRef.current &&
+        (currentLinkRef &&
+          currentLinkRef.current &&
+          currentLinkRef.current.contains(document.activeElement)) ||
+        (currentDropdownRef &&
+          currentDropdownRef.current &&
           !currentDropdownRef.current.contains(document.activeElement))
       ) {
         setPressed(false);

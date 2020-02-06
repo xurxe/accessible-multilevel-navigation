@@ -70,8 +70,9 @@ Finally, there's the `RestartButton` component. It's rendered after the last ite
   - Since they're icons only, they have a suitable text alternative available to screen readers ("Show [name] submenu" or "Hide [name] submenu")
   - Icons in buttons are `aria-hidden`
 - Focus visible:
-  - Uses `focus-visible` polyfill to show default browser focus highlights only when user is navigating with a keyboard or similar technology
+  - Uses `focus-visible` polyfill to show default browser focus highlights only when the browser determines it's needed (in this case, when the user is navigating with a keyboard or keyboard-like technology)
   - Since default browser focus highlights may be insufficient, especially on colored backgrounds, additional focus styles are provided
+- `min-height` and `min-width` ensure that targets are always at least 44 x 44 CSS pixels
 - Contrast (in the two example themes): WCAG Level AAA
 
 ### Theming
